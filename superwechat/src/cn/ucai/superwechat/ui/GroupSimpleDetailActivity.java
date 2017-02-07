@@ -25,8 +25,9 @@ import android.widget.Toast;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMGroupInfo;
-import com.hyphenate.chatuidemo.R;
 import com.hyphenate.exceptions.HyphenateException;
+
+import cn.ucai.superwechat.R;
 
 public class GroupSimpleDetailActivity extends BaseActivity {
 	private Button btn_add_group;

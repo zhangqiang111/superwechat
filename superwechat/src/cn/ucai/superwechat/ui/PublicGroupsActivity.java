@@ -35,11 +35,12 @@ import android.widget.Toast;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCursorResult;
 import com.hyphenate.chat.EMGroupInfo;
-import com.hyphenate.chatuidemo.R;
 import com.hyphenate.exceptions.HyphenateException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.ucai.superwechat.R;
 
 public class PublicGroupsActivity extends BaseActivity {
 	private ProgressBar pb;
