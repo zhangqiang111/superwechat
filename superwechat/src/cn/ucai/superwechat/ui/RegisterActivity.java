@@ -35,6 +35,7 @@ import cn.ucai.superwechat.net.NetDao;
 import cn.ucai.superwechat.net.OnCompleteListener;
 import cn.ucai.superwechat.utils.CommonUtils;
 import cn.ucai.superwechat.utils.MFGT;
+import cn.ucai.superwechat.utils.OkHttpUtils;
 import cn.ucai.superwechat.utils.ResultUtils;
 import cn.ucai.superwechat.widget.I;
 
@@ -146,6 +147,7 @@ public class RegisterActivity extends BaseActivity {
                             }
                         });
                     } catch (final HyphenateException e) {
+                        unRigsterAppServer();
                         runOnUiThread(new Runnable() {
                             public void run() {
                                 if (!RegisterActivity.this.isFinishing())
@@ -174,12 +176,26 @@ public class RegisterActivity extends BaseActivity {
     public void back(View view) {
         finish();
     }
+    public void unRigsterAppServer(){
+        NetDao.unRegister(this, username, new OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String result) {
+
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+    }
 
     @OnClick({R.id.top_back, R.id.btn_login})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.top_back:
-                MFGT.gotoGuideActivity(this);
+//                MFGT.gotoGuideActivity(this);
+                MFGT.finish(this);
                 break;
             case R.id.btn_login:
                 Log.e(">>>>>", "注册按钮");
