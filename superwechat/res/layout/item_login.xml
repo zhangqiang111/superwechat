@@ -3,7 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
-    <include layout="@layout/item_top"/>
+<include layout="@layout/item_top"/>
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,11 +17,8 @@
                 android:gravity="center"
                 android:text="用户名"/>
             <EditText
-                android:id="@+id/etUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:background="@null"
                 android:hint="你的用户名"/>
         </TableRow>
         <View
@@ -36,11 +33,8 @@
                 android:textSize="20sp"
                 android:text="昵称"/>
             <EditText
-                android:id="@+id/etNick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:layout_marginLeft="10dp"
                 android:hint="你的昵称"/>
         </TableRow>
         <View
@@ -55,12 +49,8 @@
                 android:gravity="center"
                 android:text="密码"/>
             <EditText
-                android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:layout_marginLeft="10dp"
-                android:inputType="textPassword"
                 android:hint="你的密码"/>
         </TableRow>
         <View
@@ -75,12 +65,8 @@
                 android:textSize="20sp"
                 android:text="确认密码"/>
             <EditText
-                android:id="@+id/etConfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:layout_marginLeft="10dp"
-                android:inputType="textPassword"
                 android:hint="你的确认密码"/>
         </TableRow>
         <View
@@ -89,7 +75,6 @@
             android:background="@color/gray"/>
     </TableLayout>
     <Button
-        android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bg_login"
