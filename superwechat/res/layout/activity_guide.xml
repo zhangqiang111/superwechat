@@ -21,7 +21,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:background="#459F3F"
-        android:text="@string/login"/>
+        android:text="@string/login_btn_action"/>
     <Button
         android:id="@+id/bt_register"
         android:layout_width="140dp"
@@ -30,5 +30,5 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:background="#C7C7C7"
-        android:text="@string/register"/>
+        android:text="@string/login_btn_register"/>
 </RelativeLayout>

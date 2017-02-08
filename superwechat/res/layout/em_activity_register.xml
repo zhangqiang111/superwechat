@@ -96,5 +96,5 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="50dp"
         android:layout_marginRight="10dp"
-        android:text="@string/login"/>
+        android:text="@string/login_btn_register"/>
 </LinearLayout>
