@@ -16,6 +16,7 @@ package cn.ucai.superwechat.ui;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,11 +30,16 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.superwechat.DemoHelper;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.net.NetDao;
+import cn.ucai.superwechat.net.OnCompleteListener;
+import cn.ucai.superwechat.utils.CommonUtils;
 import cn.ucai.superwechat.utils.MFGT;
+import cn.ucai.superwechat.utils.ResultUtils;
+import cn.ucai.superwechat.widget.I;
 
 /**
  * register screen
- *
  */
 public class RegisterActivity extends BaseActivity {
     @BindView(R.id.etUserName)
@@ -44,37 +50,83 @@ public class RegisterActivity extends BaseActivity {
     EditText mEtPassword;
     @BindView(R.id.etConfirm)
     EditText mEtConfirm;
+    String username;
+    String nick;
+    String password;
+    ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.em_activity_register);
         ButterKnife.bind(this);
+
+        pd = new ProgressDialog(this);
     }
 
     public void register() {
-        final String username = mEtUserName.getText().toString().trim();
-        final String pwd = mEtPassword.getText().toString().trim();
-        String confirm_pwd = mEtConfirm.getText().toString().trim();
+        username = mEtUserName.getText().toString().trim();
+        nick = mEtNick.getText().toString().trim();
+        password = mEtPassword.getText().toString().trim();
+        String confirm_password = mEtConfirm.getText().toString().trim();
         if (TextUtils.isEmpty(username)) {
             Toast.makeText(this, getResources().getString(R.string.User_name_cannot_be_empty), Toast.LENGTH_SHORT).show();
             mEtUserName.requestFocus();
             return;
-        } else if (TextUtils.isEmpty(pwd)) {
+        } else if (TextUtils.isEmpty(password)) {
             Toast.makeText(this, getResources().getString(R.string.Password_cannot_be_empty), Toast.LENGTH_SHORT).show();
             mEtPassword.requestFocus();
             return;
-        } else if (TextUtils.isEmpty(confirm_pwd)) {
+        } else if (TextUtils.isEmpty(confirm_password)) {
             Toast.makeText(this, getResources().getString(R.string.Confirm_password_cannot_be_empty), Toast.LENGTH_SHORT).show();
             mEtConfirm.requestFocus();
             return;
-        } else if (!pwd.equals(confirm_pwd)) {
+        } else if (!password.equals(confirm_password)) {
             Toast.makeText(this, getResources().getString(R.string.Two_input_password), Toast.LENGTH_SHORT).show();
             return;
         }
+        nick = mEtNick.getText().toString().trim();
+        if (TextUtils.isEmpty(nick)) {
+            nick = "";
+        }
+        registerAppServer();
+    }
 
-        if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(pwd)) {
-            final ProgressDialog pd = new ProgressDialog(this);
+    private void registerAppServer() {
+        NetDao.register(this, username, nick, password, new OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                if (s != null) {
+                    Result result = ResultUtils.getResultFromJson(s, null);
+                    if (result != null) {
+                        if (result.isRetMsg()) {
+                            registerEmServer();
+                        }
+                    } else {
+                        pd.dismiss();
+                        if (result.getRetCode() == I.MSG_REGISTER_USERNAME_EXISTS) {
+                            CommonUtils.showShortToast(R.string.User_already_exists);
+                        } else {
+                            CommonUtils.showShortToast(R.string.Registration_failed);
+                        }
+                    }
+
+                } else {
+                    pd.dismiss();
+                    CommonUtils.showShortToast(R.string.Registration_failed);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                pd.dismiss();
+                CommonUtils.showShortToast(R.string.Registration_failed);
+            }
+        });
+    }
+
+    private void registerEmServer() {
+        if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
             pd.setMessage(getResources().getString(R.string.Is_the_registered));
             pd.show();
 
@@ -82,7 +134,7 @@ public class RegisterActivity extends BaseActivity {
                 public void run() {
                     try {
                         // call method in SDK
-                        EMClient.getInstance().createAccount(username, pwd);
+                        EMClient.getInstance().createAccount(username, password);
                         runOnUiThread(new Runnable() {
                             public void run() {
                                 if (!RegisterActivity.this.isFinishing())
@@ -130,6 +182,7 @@ public class RegisterActivity extends BaseActivity {
                 MFGT.gotoGuideActivity(this);
                 break;
             case R.id.btn_login:
+                Log.e(">>>>>", "注册按钮");
                 register();
                 break;
         }
