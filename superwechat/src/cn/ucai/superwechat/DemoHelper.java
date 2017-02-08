@@ -90,7 +90,7 @@ public class DemoHelper {
 
 	private static DemoHelper instance = null;
 	
-	private DemoModel demoModel = null;
+	private SuperWeChatModel demoModel = null;
 	
 	/**
      * sync groups status listener
@@ -145,7 +145,7 @@ public class DemoHelper {
 	 *            application context
 	 */
 	public void init(Context context) {
-	    demoModel = new DemoModel(context);
+	    demoModel = new SuperWeChatModel(context);
 	    EMOptions options = initChatOptions();
 	    //use default options if options is null
 		if (EaseUI.getInstance().init(context, options)) {
@@ -885,8 +885,8 @@ public class DemoHelper {
 	    return easeUI.getNotifier();
 	}
 	
-	public DemoModel getModel(){
-        return (DemoModel) demoModel;
+	public SuperWeChatModel getModel(){
+        return (SuperWeChatModel) demoModel;
     }
 	
 	/**

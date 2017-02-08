@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
 import cn.ucai.superwechat.Constant;
-import cn.ucai.superwechat.DemoApplication;
+import cn.ucai.superwechat.SuperWeChatApplication;
 import cn.ucai.superwechat.domain.InviteMessage;
 import cn.ucai.superwechat.domain.RobotUser;
 import com.hyphenate.easeui.domain.EaseUser;
@@ -24,7 +24,7 @@ public class DemoDBManager {
     private DbOpenHelper dbHelper;
     
     private DemoDBManager(){
-        dbHelper = DbOpenHelper.getInstance(DemoApplication.getInstance().getApplicationContext());
+        dbHelper = DbOpenHelper.getInstance(SuperWeChatApplication.getInstance().getApplicationContext());
     }
     
     public static synchronized DemoDBManager getInstance(){

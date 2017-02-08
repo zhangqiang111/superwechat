@@ -18,7 +18,8 @@
     <color name="text_hint">#353535</color>
     <color name="text_color_hint">#DDDDDD</color>
     <color name="text_wenti">#7d96cc</color>
-
+    <color name="bg_login">#459F3F</color>
+    <color name="bg_register">#C7C7C7</color>
     <!-- tab -->
     <color name="tab_bottom_bg_color">#fc1e2327</color>
     <color name="tab_def_normal_color">#A0B9CD</color>
