@@ -36,12 +36,18 @@ import butterknife.OnClick;
 import cn.ucai.superwechat.DemoHelper;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatApplication;
+import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.bean.User;
 import cn.ucai.superwechat.db.DemoDBManager;
+import cn.ucai.superwechat.net.NetDao;
+import cn.ucai.superwechat.net.OnCompleteListener;
+import cn.ucai.superwechat.utils.CommonUtils;
 import cn.ucai.superwechat.utils.MFGT;
+import cn.ucai.superwechat.utils.ResultUtils;
+import cn.ucai.superwechat.widget.I;
 
 /**
  * Login screen
- *
  */
 public class LoginActivity extends BaseActivity {
     private static final String TAG = "LoginActivity";
@@ -54,6 +60,9 @@ public class LoginActivity extends BaseActivity {
     private boolean progressShow;
     private boolean autoLogin = false;
 
+    String currentUsername;
+    String currentPassword;
+    ProgressDialog pd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,20 +95,20 @@ public class LoginActivity extends BaseActivity {
         });
         if (DemoHelper.getInstance().getCurrentUsernName() != null) {
             mEtUserName.setText(DemoHelper.getInstance().getCurrentUsernName());
+            mEtUserName.setSelection(DemoHelper.getInstance().getCurrentUsernName().length());
         }
     }
 
     /**
      * login
-     *
      */
     public void login() {
         if (!EaseCommonUtils.isNetWorkConnected(this)) {
             Toast.makeText(this, R.string.network_isnot_available, Toast.LENGTH_SHORT).show();
             return;
         }
-        String currentUsername = mEtUserName.getText().toString().trim();
-        String currentPassword = mEtPassword.getText().toString().trim();
+        currentUsername = mEtUserName.getText().toString().trim();
+        currentPassword = mEtPassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(currentUsername)) {
             Toast.makeText(this, R.string.User_name_cannot_be_empty, Toast.LENGTH_SHORT).show();
@@ -111,7 +120,7 @@ public class LoginActivity extends BaseActivity {
         }
 
         progressShow = true;
-        final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
+        pd = new ProgressDialog(LoginActivity.this);
         pd.setCanceledOnTouchOutside(false);
         pd.setOnCancelListener(new OnCancelListener() {
 
@@ -133,6 +142,45 @@ public class LoginActivity extends BaseActivity {
 
         final long start = System.currentTimeMillis();
         // call login method
+        loginAppServer();
+    }
+
+    public void loginAppServer() {
+        NetDao.login(this, currentUsername, currentPassword, new OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                if (s!=null){
+                    Result result = ResultUtils.getResultFromJson(s,User.class);
+                    Log.e(">>>>>",result.toString());
+                    if (result!=null&&result.isRetMsg()){
+                        loginEmServer();
+                    }else {
+                        pd.dismiss();
+                        if (result.getRetCode()== I.MSG_LOGIN_UNKNOW_USER){
+                            CommonUtils.showShortToast("账户不存在");
+                        }else if (result.getRetCode()==I.MSG_LOGIN_ERROR_PASSWORD){
+                            CommonUtils.showShortToast("用户密码错误");
+                        }else {
+                            CommonUtils.showShortToast(R.string.Login_failed);
+                        }
+                    }
+                }else {
+                    Log.e(">>>","我在最后");
+                    pd.dismiss();
+                    CommonUtils.showShortToast(R.string.Login_failed);
+                }
+
+            }
+
+            @Override
+            public void onError(String error) {
+                pd.dismiss();
+                CommonUtils.showShortToast(R.string.Login_failed);
+            }
+        });
+
+    }
+    public void loginEmServer() {
         Log.d(TAG, "EMClient.getInstance().login");
         EMClient.getInstance().login(currentUsername, currentPassword, new EMCallBack() {
 
@@ -187,16 +235,6 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-
-    /**
-     * register
-     *
-     * @param view
-     */
-    public void register(View view) {
-        startActivityForResult(new Intent(this, RegisterActivity.class), 0);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -215,6 +253,7 @@ public class LoginActivity extends BaseActivity {
                 login();
                 break;
             case R.id.btn_register:
+                MFGT.gotoRegisterActivity(this);
                 break;
         }
     }

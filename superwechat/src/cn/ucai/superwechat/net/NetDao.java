@@ -33,7 +33,7 @@ public class NetDao {
     }
     public static void login(Context context,String username,String password,OnCompleteListener<String> listener){
         OkHttpUtils<String> utils = new OkHttpUtils<>(context);
-        utils.setRequestUrl(I.REQUEST_UNREGISTER)
+        utils.setRequestUrl(I.REQUEST_LOGIN)
                 .addParam(I.User.USER_NAME,username)
                 .addParam(I.User.PASSWORD,MD5.getMessageDigest(password))
                 .targetClass(String.class)
