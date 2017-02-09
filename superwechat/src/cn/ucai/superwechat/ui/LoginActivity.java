@@ -33,9 +33,9 @@ import com.hyphenate.easeui.utils.EaseCommonUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.ucai.superwechat.DemoHelper;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatApplication;
+import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.db.SuperWeChatDBManager;
 import cn.ucai.superwechat.utils.MD5;
 import cn.ucai.superwechat.utils.MFGT;
@@ -57,12 +57,13 @@ public class LoginActivity extends BaseActivity {
     String currentUsername;
     String currentPassword;
     ProgressDialog pd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // enter the main activity if already logged in
-        if (DemoHelper.getInstance().isLoggedIn()) {
+        if (cn.ucai.superwechat.SuperWeChatHelper.getInstance().isLoggedIn()) {
             autoLogin = true;
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
@@ -87,9 +88,9 @@ public class LoginActivity extends BaseActivity {
 
             }
         });
-        if (DemoHelper.getInstance().getCurrentUsernName() != null) {
-            mEtUserName.setText(DemoHelper.getInstance().getCurrentUsernName());
-            mEtUserName.setSelection(DemoHelper.getInstance().getCurrentUsernName().length());
+        if (cn.ucai.superwechat.SuperWeChatHelper.getInstance().getCurrentUsernName() != null) {
+            mEtUserName.setText(cn.ucai.superwechat.SuperWeChatHelper.getInstance().getCurrentUsernName());
+            mEtUserName.setSelection(cn.ucai.superwechat.SuperWeChatHelper.getInstance().getCurrentUsernName().length());
         }
     }
 
@@ -132,48 +133,13 @@ public class LoginActivity extends BaseActivity {
         SuperWeChatDBManager.getInstance().closeDB();
 
         // reset current user name before login
-        DemoHelper.getInstance().setCurrentUserName(currentUsername);
+        cn.ucai.superwechat.SuperWeChatHelper.getInstance().setCurrentUserName(currentUsername);
 
         final long start = System.currentTimeMillis();
         // call login method
         loginEmServer();
     }
 
-   /* public void loginAppServer() {
-        NetDao.login(this, currentUsername, currentPassword, new OnCompleteListener<String>() {
-            @Override
-            public void onSuccess(String s) {
-                if (s!=null){
-                    Result result = ResultUtils.getResultFromJson(s,User.class);
-                    Log.e(">>>>>",result.toString());
-                    if (result!=null&&result.isRetMsg()){
-                        loginEmServer();
-                    }else {
-                        pd.dismiss();
-                        if (result.getRetCode()== I.MSG_LOGIN_UNKNOW_USER){
-                            CommonUtils.showShortToast("账户不存在");
-                        }else if (result.getRetCode()==I.MSG_LOGIN_ERROR_PASSWORD){
-                            CommonUtils.showShortToast("用户密码错误");
-                        }else {
-                            CommonUtils.showShortToast(R.string.Login_failed);
-                        }
-                    }
-                }else {
-                    Log.e(">>>","我在最后");
-                    pd.dismiss();
-                    CommonUtils.showShortToast(R.string.Login_failed);
-                }
-
-            }
-
-            @Override
-            public void onError(String error) {
-                pd.dismiss();
-                CommonUtils.showShortToast(R.string.Login_failed);
-            }
-        });
-
-    }*/
     public void loginEmServer() {
         Log.d(TAG, "EMClient.getInstance().login");
         EMClient.getInstance().login(currentUsername, MD5.getMessageDigest(currentPassword), new EMCallBack() {
@@ -224,7 +190,8 @@ public class LoginActivity extends BaseActivity {
             pd.dismiss();
         }
         // get user's info (this should be get from App's server or 3rd party service)
-        DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo(this);
+        Log.e(">>>>","进入保存");
+        SuperWeChatHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo(this);
 
         Intent intent = new Intent(LoginActivity.this,
                 MainActivity.class);

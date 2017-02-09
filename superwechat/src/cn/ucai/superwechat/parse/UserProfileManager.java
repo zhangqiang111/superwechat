@@ -6,7 +6,8 @@ import android.util.Log;
 
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
-import cn.ucai.superwechat.DemoHelper;
+
+import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.bean.Result;
 import cn.ucai.superwechat.net.NetDao;
 import cn.ucai.superwechat.net.OnCompleteListener;
@@ -35,7 +36,7 @@ public class UserProfileManager {
 	/**
 	 * HuanXin sync contact nick and avatar listener
 	 */
-	private List<DemoHelper.DataSyncListener> syncContactInfosListeners;
+	private List<SuperWeChatHelper.DataSyncListener> syncContactInfosListeners;
 
 	private boolean isSyncingContactInfosWithServer = false;
 
@@ -49,12 +50,12 @@ public class UserProfileManager {
 			return true;
 		}
 		ParseManager.getInstance().onInit(context);
-		syncContactInfosListeners = new ArrayList<DemoHelper.DataSyncListener>();
+		syncContactInfosListeners = new ArrayList<SuperWeChatHelper.DataSyncListener>();
 		sdkInited = true;
 		return true;
 	}
 
-	public void addSyncContactInfoListener(DemoHelper.DataSyncListener listener) {
+	public void addSyncContactInfoListener(SuperWeChatHelper.DataSyncListener listener) {
 		if (listener == null) {
 			return;
 		}
@@ -63,7 +64,7 @@ public class UserProfileManager {
 		}
 	}
 
-	public void removeSyncContactInfoListener(DemoHelper.DataSyncListener listener) {
+	public void removeSyncContactInfoListener(SuperWeChatHelper.DataSyncListener listener) {
 		if (listener == null) {
 			return;
 		}
@@ -84,7 +85,7 @@ public class UserProfileManager {
 				isSyncingContactInfosWithServer = false;
 				// in case that logout already before server returns,we should
 				// return immediately
-				if (!DemoHelper.getInstance().isLoggedIn()) {
+				if (!SuperWeChatHelper.getInstance().isLoggedIn()) {
 					return;
 				}
 				if (callback != null) {
@@ -105,7 +106,7 @@ public class UserProfileManager {
 	}
 
 	public void notifyContactInfosSyncListener(boolean success) {
-		for (DemoHelper.DataSyncListener listener : syncContactInfosListeners) {
+		for (SuperWeChatHelper.DataSyncListener listener : syncContactInfosListeners) {
 			listener.onSyncComplete(success);
 		}
 	}
@@ -134,7 +135,7 @@ public class UserProfileManager {
 	public boolean updateCurrentUserNickName(final String nickname) {
 		boolean isSuccess = ParseManager.getInstance().updateParseNickName(nickname);
 		if (isSuccess) {
-			setCurrentUserNick(nickname);
+//			setCurrentUserNick(nickname);
 		}
 		return isSuccess;
 	}
@@ -153,8 +154,8 @@ public class UserProfileManager {
 			@Override
 			public void onSuccess(EaseUser value) {
 			    if(value != null){
-    				setCurrentUserNick(value.getNick());
-    				setCurrentUserAvatar(value.getAvatar());
+    				/*setCurrentUserNick(value.getNick());
+    				setCurrentUserAvatar(value.getAvatar());*/
 			    }
 			}
 
@@ -167,11 +168,18 @@ public class UserProfileManager {
 		NetDao.getUserInfoByName(activity, EMClient.getInstance().getCurrentUser(), new OnCompleteListener<String>() {
 			@Override
 			public void onSuccess(String s) {
-				Log.e(">>>",s.toString());
+				Log.e(">>>>",s.toString());
 				if (s!=null){
 					Result result = ResultUtils.getResultFromJson(s, User.class);
 					if (result!=null&&result.isRetMsg()){
-
+						//保存用户信息到数据库
+						User user = (User) result.getRetData();
+						Log.e(">>>>",user.toString());
+						if (user!=null) {
+							SuperWeChatHelper.getInstance().saveAppContact(user);
+							setCurrentUserNick(user.getMUserNick());
+							setCurrentUserAvatar(user.getAvatar());
+						}
 					}
 				}
 			}

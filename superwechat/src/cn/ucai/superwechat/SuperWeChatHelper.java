@@ -47,6 +47,7 @@ import com.hyphenate.easeui.controller.EaseUI.EaseEmojiconInfoProvider;
 import com.hyphenate.easeui.domain.EaseEmojicon;
 import com.hyphenate.easeui.domain.EaseEmojiconGroupEntity;
 import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.domain.User;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.model.EaseNotifier;
 import com.hyphenate.easeui.model.EaseNotifier.EaseNotificationInfoProvider;
@@ -61,7 +62,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class DemoHelper {
+public class SuperWeChatHelper {
     /**
      * data sync listener
      */
@@ -73,7 +74,7 @@ public class DemoHelper {
         void onSyncComplete(boolean success);
     }
 
-    protected static final String TAG = "DemoHelper";
+    protected static final String TAG = "SuperWeChatHelper";
 
 	private EaseUI easeUI;
 
@@ -83,12 +84,13 @@ public class DemoHelper {
     protected EMMessageListener messageListener = null;
 
 	private Map<String, EaseUser> contactList;
+	private Map<String, User> userContactList;
 
 	private Map<String, RobotUser> robotList;
 
 	private UserProfileManager userProManager;
 
-	private static DemoHelper instance = null;
+	private static SuperWeChatHelper instance = null;
 
 	private SuperWeChatModel demoModel = null;
 
@@ -128,12 +130,12 @@ public class DemoHelper {
 
     private boolean isGroupAndContactListenerRegisted;
 
-	private DemoHelper() {
+	private SuperWeChatHelper() {
 	}
 
-	public synchronized static DemoHelper getInstance() {
+	public synchronized static SuperWeChatHelper getInstance() {
 		if (instance == null) {
-			instance = new DemoHelper();
+			instance = new SuperWeChatHelper();
 		}
 		return instance;
 	}
@@ -664,7 +666,7 @@ public class DemoHelper {
 
         @Override
         public void onContactDeleted(String username) {
-            Map<String, EaseUser> localUsers = DemoHelper.getInstance().getContactList();
+            Map<String, EaseUser> localUsers = cn.ucai.superwechat.SuperWeChatHelper.getInstance().getContactList();
             localUsers.remove(username);
             userDao.deleteContact(username);
             inviteMessgeDao.deleteMessage(username);
@@ -1285,6 +1287,49 @@ public class DemoHelper {
 
     public void popActivity(Activity activity) {
         easeUI.popActivity(activity);
+    }
+
+    //仿写
+    /**
+     * update contact list
+     *
+     * @param aContactList
+     */
+    public void setAppContactList(Map<String, User> aContactList) {
+        if(aContactList == null){
+            if (userContactList != null) {
+                userContactList.clear();
+            }
+            return;
+        }
+
+        userContactList = aContactList;
+    }
+
+    /**
+     * save single contact
+     */
+    public void saveAppContact(User user){
+        getAppContactList().put(user.getMUserName(), user);
+        demoModel.saveAppContact(user);
+    }
+
+    /**
+     * get contact list
+     *
+     * @return
+     */
+    public Map<String, User> getAppContactList() {
+        if (isLoggedIn() && userContactList == null) {
+            userContactList = demoModel.getAppContactList();
+        }
+
+        // return a empty non-null object to avoid app crash
+        if(userContactList == null){
+            return new Hashtable<String, User>();
+        }
+
+        return userContactList;
     }
 
 }
