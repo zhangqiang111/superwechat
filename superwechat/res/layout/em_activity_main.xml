@@ -6,35 +6,25 @@
     android:layout_height="match_parent"
     android:background="@color/common_bg" >
 
+
+
     <LinearLayout
         android:id="@+id/main_bottom"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/bottom_bar_normal_bg"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        tools:ignore="DisableBaselineAlignment">
+        tools:ignore="DisableBaselineAlignment"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <RelativeLayout
             android:id="@+id/btn_container_conversation"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" >
-
-            <Button
-                android:id="@+id/btn_conversation"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/em_main_bottom_item_bg"
-                android:drawableTop="@drawable/em_tab_chat_bg"
-                android:onClick="onTabClicked"
-                android:paddingBottom="2dip"
-                android:paddingTop="7dip"
-                android:scaleType="matrix"
-                android:text="@string/session"
-                android:textColor="@color/em_main_botton_text_color"
-                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/unread_msg_number"
@@ -48,6 +38,24 @@
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
                 android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btn_conversation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:drawableTop="@drawable/tab_weixin"
+                android:text="@string/app_name"
+                android:paddingBottom="2dip"
+                android:paddingTop="7dip"
+                android:scaleType="matrix"
+                android:onClick="onTabClicked"
+                android:textSize="12sp"
+
+                android:textColor="#9A9A9A"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -56,20 +64,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1" >
 
-            <Button
-                android:id="@+id/btn_address_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/em_main_bottom_item_bg"
-                android:drawableTop="@drawable/em_tab_contact_list_bg"
-                android:onClick="onTabClicked"
-                android:paddingBottom="2dip"
-                android:paddingTop="7dip"
-                android:scaleType="matrix"
-                android:text="@string/address_book"
-                android:textColor="@color/em_main_botton_text_color"
-                android:textSize="12sp" />
-
             <TextView
                 android:id="@+id/unread_address_number"
                 android:layout_width="wrap_content"
@@ -77,9 +71,58 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/em_unread_dot"
-                android:visibility="visible" />
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btn_address_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableTop="@drawable/tab_contact_list"
+                android:onClick="onTabClicked"
+                android:paddingBottom="2dip"
+                android:paddingTop="7dip"
+                android:scaleType="matrix"
+                android:text="@string/contacts"
+                android:background="@null"
+                android:textColor="#9A9A9A"
+                android:textSize="12sp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/rl_discover"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/tv_discover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/em_unread_dot"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btn_discover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:drawableTop="@drawable/tab_find"
+                android:onClick="onTabClicked"
+                android:paddingBottom="2dip"
+                android:paddingTop="7dip"
+                android:scaleType="matrix"
+                android:text="@string/discover"
+                android:textColor="#9A9A9A"
+                android:textSize="12sp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+        </RelativeLayout>
         <RelativeLayout
             android:id="@+id/btn_container_setting"
             android:layout_width="0dp"
@@ -90,22 +133,20 @@
                 android:id="@+id/btn_setting"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/em_main_bottom_item_bg"
-                android:drawableTop="@drawable/em_tab_setting_bg"
+                android:background="@null"
+                android:drawableTop="@drawable/tab_profile"
                 android:onClick="onTabClicked"
                 android:paddingBottom="2dip"
                 android:paddingTop="7dip"
                 android:scaleType="matrix"
-                android:text="@string/setting"
-                android:textColor="@color/em_main_botton_text_color"
+                android:text="@string/me"
+                android:textColor="#9A9A9A"
                 android:textSize="12sp" />
         </RelativeLayout>
     </LinearLayout>
-
     <RelativeLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/main_bottom" />
-
 </RelativeLayout>
