@@ -34,6 +34,8 @@ import cn.ucai.superwechat.bean.Result;
 import cn.ucai.superwechat.net.NetDao;
 import cn.ucai.superwechat.net.OnCompleteListener;
 import cn.ucai.superwechat.utils.CommonUtils;
+import cn.ucai.superwechat.utils.L;
+import cn.ucai.superwechat.utils.MD5;
 import cn.ucai.superwechat.utils.MFGT;
 import cn.ucai.superwechat.utils.OkHttpUtils;
 import cn.ucai.superwechat.utils.ResultUtils;
@@ -43,6 +45,7 @@ import cn.ucai.superwechat.widget.I;
  * register screen
  */
 public class RegisterActivity extends BaseActivity {
+    final static String TAG = "RegisterActivity";
     @BindView(R.id.etUserName)
     EditText mEtUserName;
     @BindView(R.id.etNick)
@@ -94,6 +97,8 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void registerAppServer() {
+        Log.e(TAG,"进入registerAppServer");
+        pd.show();
         NetDao.register(this, username, nick, password, new OnCompleteListener<String>() {
             @Override
             public void onSuccess(String s) {
@@ -101,6 +106,7 @@ public class RegisterActivity extends BaseActivity {
                     Result result = ResultUtils.getResultFromJson(s, null);
                     if (result != null) {
                         if (result.isRetMsg()) {
+                            Log.e(">>>>","进入registerEmServer");
                             registerEmServer();
                         }
                     } else {
@@ -108,6 +114,7 @@ public class RegisterActivity extends BaseActivity {
                         if (result.getRetCode() == I.MSG_REGISTER_USERNAME_EXISTS) {
                             CommonUtils.showShortToast(R.string.User_already_exists);
                         } else {
+                            L.e(TAG,"到了");
                             CommonUtils.showShortToast(R.string.Registration_failed);
                         }
                     }
@@ -135,7 +142,7 @@ public class RegisterActivity extends BaseActivity {
                 public void run() {
                     try {
                         // call method in SDK
-                        EMClient.getInstance().createAccount(username, password);
+                        EMClient.getInstance().createAccount(username, MD5.getMessageDigest(password));
                         runOnUiThread(new Runnable() {
                             public void run() {
                                 if (!RegisterActivity.this.isFinishing())

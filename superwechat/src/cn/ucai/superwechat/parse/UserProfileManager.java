@@ -1,11 +1,19 @@
 package cn.ucai.superwechat.parse;
 
+import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
 import cn.ucai.superwechat.DemoHelper;
+import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.bean.User;
+import cn.ucai.superwechat.net.NetDao;
+import cn.ucai.superwechat.net.OnCompleteListener;
 import cn.ucai.superwechat.utils.PreferenceManager;
+import cn.ucai.superwechat.utils.ResultUtils;
+
 import com.hyphenate.easeui.domain.EaseUser;
 
 import java.util.ArrayList;
@@ -139,7 +147,7 @@ public class UserProfileManager {
 		return avatarUrl;
 	}
 
-	public void asyncGetCurrentUserInfo() {
+	public void asyncGetCurrentUserInfo(Activity activity) {
 		ParseManager.getInstance().asyncGetCurrentUserInfo(new EMValueCallBack<EaseUser>() {
 
 			@Override
@@ -152,6 +160,24 @@ public class UserProfileManager {
 
 			@Override
 			public void onError(int error, String errorMsg) {
+
+			}
+		});
+
+		NetDao.getUserInfoByName(activity, EMClient.getInstance().getCurrentUser(), new OnCompleteListener<String>() {
+			@Override
+			public void onSuccess(String s) {
+				Log.e(">>>",s.toString());
+				if (s!=null){
+					Result result = ResultUtils.getResultFromJson(s, User.class);
+					if (result!=null&&result.isRetMsg()){
+
+					}
+				}
+			}
+
+			@Override
+			public void onError(String error) {
 
 			}
 		});
