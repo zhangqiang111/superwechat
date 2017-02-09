@@ -20,6 +20,7 @@ import android.content.Context;
 
 import cn.ucai.superwechat.domain.RobotUser;
 import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.domain.User;
 
 public class UserDao {
 	public static final String TABLE_NAME = "uers";
@@ -35,8 +36,20 @@ public class UserDao {
 	public static final String ROBOT_COLUMN_NAME_ID = "username";
 	public static final String ROBOT_COLUMN_NAME_NICK = "nick";
 	public static final String ROBOT_COLUMN_NAME_AVATAR = "avatar";
-	
-	
+
+	//new
+	public static final String USER_TABLE_NAME = "t_superwechat_user";
+	public static final String USER_COLUMN_NAME = "m_user_name";
+	public static final String USER_COLUMN_NICK = "m_user_nick";
+	public static final String USER_COLUMN_AVATAR_ID = "m_user_avatar";
+	public static final String USER_COLUMN_AVATAR_PATH = "m_user_avatar_path";
+	public static final String USER_COLUMN_AVATAR_SUFFIX = "m_user_avatar_suffix";
+	public static final String USER_COLUMN_AVATAR_TYPE = "m_user_avatar_type";
+	public static final String USER_COLUMN_AVATAR_UPDATE_TIME = "m_user_updata_time";
+	/*public static final String TABLE_NAME = "uers";
+	public static final String COLUMN_NAME_ID = "username";
+	public static final String COLUMN_NAME_NICK = "nick";
+	public static final String COLUMN_NAME_AVATAR = "avatar";*/
 	public UserDao(Context context) {
 	}
 
@@ -45,8 +58,8 @@ public class UserDao {
 	 * 
 	 * @param contactList
 	 */
-	public void saveContactList(List<EaseUser> contactList) {
-	    DemoDBManager.getInstance().saveContactList(contactList);
+	public void saveAppContactList(List<User> contactList) {
+	    SuperWeChatDBManager.getInstance().saveAppContactList(contactList);
 	}
 
 	/**
@@ -54,48 +67,82 @@ public class UserDao {
 	 * 
 	 * @return
 	 */
-	public Map<String, EaseUser> getContactList() {
+	public Map<String,User> getAppContactList() {
 		
-	    return DemoDBManager.getInstance().getContactList();
+	    return SuperWeChatDBManager.getInstance().getAppContactList();
 	}
 	
 	/**
 	 * delete a contact
 	 * @param username
 	 */
-	public void deleteContact(String username){
-	    DemoDBManager.getInstance().deleteContact(username);
+	public void deleteAppContact(String username){
+	    SuperWeChatDBManager.getInstance().deleteAppContact(username);
 	}
 	
 	/**
 	 * save a contact
 	 * @param user
 	 */
-	public void saveContact(EaseUser user){
-	    DemoDBManager.getInstance().saveContact(user);
+	public void saveAppContact(User user){
+	    SuperWeChatDBManager.getInstance().saveAppContact(user);
 	}
 	
 	public void setDisabledGroups(List<String> groups){
-	    DemoDBManager.getInstance().setDisabledGroups(groups);
+	    SuperWeChatDBManager.getInstance().setDisabledGroups(groups);
     }
     
     public List<String>  getDisabledGroups(){       
-        return DemoDBManager.getInstance().getDisabledGroups();
+        return SuperWeChatDBManager.getInstance().getDisabledGroups();
     }
     
     public void setDisabledIds(List<String> ids){
-        DemoDBManager.getInstance().setDisabledIds(ids);
+        SuperWeChatDBManager.getInstance().setDisabledIds(ids);
     }
     
     public List<String> getDisabledIds(){
-        return DemoDBManager.getInstance().getDisabledIds();
+        return SuperWeChatDBManager.getInstance().getDisabledIds();
     }
     
     public Map<String, RobotUser> getRobotUser(){
-    	return DemoDBManager.getInstance().getRobotList();
+    	return SuperWeChatDBManager.getInstance().getRobotList();
     }
     
     public void saveRobotUser(List<RobotUser> robotList){
-    	DemoDBManager.getInstance().saveRobotList(robotList);
+    	SuperWeChatDBManager.getInstance().saveRobotList(robotList);
     }
+	/**
+	 * save contact list
+	 *
+	 * @param contactList
+	 */
+	public void saveContactList(List<EaseUser> contactList) {
+		SuperWeChatDBManager.getInstance().saveContactList(contactList);
+	}
+
+	/**
+	 * get contact list
+	 *
+	 * @return
+	 */
+	public Map<String, EaseUser> getContactList() {
+
+		return SuperWeChatDBManager.getInstance().getContactList();
+	}
+
+	/**
+	 * delete a contact
+	 * @param username
+	 */
+	public void deleteContact(String username){
+		SuperWeChatDBManager.getInstance().deleteContact(username);
+	}
+
+	/**
+	 * save a contact
+	 * @param user
+	 */
+	public void saveContact(EaseUser user){
+		SuperWeChatDBManager.getInstance().saveContact(user);
+	}
 }

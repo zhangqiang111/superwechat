@@ -36,16 +36,9 @@ import butterknife.OnClick;
 import cn.ucai.superwechat.DemoHelper;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatApplication;
-import cn.ucai.superwechat.bean.Result;
-import cn.ucai.superwechat.bean.User;
-import cn.ucai.superwechat.db.DemoDBManager;
-import cn.ucai.superwechat.net.NetDao;
-import cn.ucai.superwechat.net.OnCompleteListener;
-import cn.ucai.superwechat.utils.CommonUtils;
+import cn.ucai.superwechat.db.SuperWeChatDBManager;
 import cn.ucai.superwechat.utils.MD5;
 import cn.ucai.superwechat.utils.MFGT;
-import cn.ucai.superwechat.utils.ResultUtils;
-import cn.ucai.superwechat.widget.I;
 
 /**
  * Login screen
@@ -136,7 +129,7 @@ public class LoginActivity extends BaseActivity {
 
         // After logout，the DemoDB may still be accessed due to async callback, so the DemoDB will be re-opened again.
         // close it before login to make sure DemoDB not overlap
-        DemoDBManager.getInstance().closeDB();
+        SuperWeChatDBManager.getInstance().closeDB();
 
         // reset current user name before login
         DemoHelper.getInstance().setCurrentUserName(currentUsername);
