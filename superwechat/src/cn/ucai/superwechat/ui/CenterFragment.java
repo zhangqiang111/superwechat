@@ -15,15 +15,16 @@ import android.widget.TextView;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
-import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseSwitchButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatModel;
+import cn.ucai.superwechat.utils.MFGT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -121,7 +122,7 @@ public class CenterFragment extends Fragment {
         String username = EMClient.getInstance().getCurrentUser();
         mTvUsername.setText(username);
         EaseUserUtils.setAppUserNick(username, mTvNick);
-        EaseUserUtils.setUserAvatar(getContext(), username, mUserHeadAvatar);
+        EaseUserUtils.setAppUserAvatar(getContext(), username, mUserHeadAvatar);
     }
 
 
@@ -135,4 +136,8 @@ public class CenterFragment extends Fragment {
         }
     }
 
+    @OnClick(R.id.tv_settings)
+    public void onClick() {
+        MFGT.gotoSettings(getActivity());
+    }
 }

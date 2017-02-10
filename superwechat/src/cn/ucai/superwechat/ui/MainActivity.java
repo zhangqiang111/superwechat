@@ -28,8 +28,6 @@ import android.os.PowerManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -96,7 +94,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private Button[] mTabs;
     private ContactListFragment contactListFragment;
     private  DiscoverFragment mDiscoverFragment;
-    SettingsFragment settingFragment;
+    SettingsActivity settingFragment;
     private Fragment[] fragments;
     private CenterFragment mCenterFragment;
     private int index;
@@ -154,9 +152,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         conversationListFragment = new ConversationListFragment();
         contactListFragment = new ContactListFragment();
         mDiscoverFragment = new DiscoverFragment();
-        settingFragment = new SettingsFragment();
+        settingFragment = new SettingsActivity();
         mCenterFragment = new CenterFragment();
-        fragments = new Fragment[]{conversationListFragment, contactListFragment,mDiscoverFragment, settingFragment};
 
         //register broadcast receiver to receive the change of group from SuperWeChatHelper
         registerBroadcastReceiver();

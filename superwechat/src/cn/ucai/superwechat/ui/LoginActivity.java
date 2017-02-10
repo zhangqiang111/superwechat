@@ -37,6 +37,7 @@ import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatApplication;
 import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.db.SuperWeChatDBManager;
+import cn.ucai.superwechat.utils.DisplayUtils;
 import cn.ucai.superwechat.utils.MD5;
 import cn.ucai.superwechat.utils.MFGT;
 
@@ -71,6 +72,7 @@ public class LoginActivity extends BaseActivity {
         }
         setContentView(R.layout.em_activity_login);
         ButterKnife.bind(this);
+        DisplayUtils.initBackWithTitle(this,"登陆");
         // if user changed, clear the password
         mEtUserName.addTextChangedListener(new TextWatcher() {
             @Override

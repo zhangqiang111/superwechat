@@ -37,6 +37,7 @@ import cn.ucai.superwechat.db.UserDao;
 import cn.ucai.superwechat.net.NetDao;
 import cn.ucai.superwechat.net.OnCompleteListener;
 import cn.ucai.superwechat.utils.CommonUtils;
+import cn.ucai.superwechat.utils.DisplayUtils;
 import cn.ucai.superwechat.utils.L;
 import cn.ucai.superwechat.utils.MD5;
 import cn.ucai.superwechat.utils.MFGT;
@@ -66,7 +67,7 @@ public class RegisterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.em_activity_register);
         ButterKnife.bind(this);
-
+        DisplayUtils.initBackWithTitle(this,"注册");
         pd = new ProgressDialog(this);
     }
 

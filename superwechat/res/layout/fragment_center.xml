@@ -32,26 +32,14 @@
                     android:layout_alignParentTop="true"
                     android:layout_margin="8dip"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/em_default_avatar"
+                    android:src="@drawable/default_hd_avatar"
                     />
-
-                <ImageView
-                    android:id="@+id/user_head_headphoto_update"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/user_head_avatar"
-                    android:layout_alignBottom="@+id/user_head_avatar"
-                    android:layout_alignRight="@+id/user_head_avatar"
-                    android:layout_margin="3dip"
-                    android:src="@drawable/em_profile_headphoto_update_icon"
-                    />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:orientation="vertical"
-                    android:layout_toRightOf="@id/user_head_headphoto_update">
+                    android:layout_toRightOf="@id/user_head_avatar">
 
                     <TextView
                         android:id="@+id/tv_username"
@@ -121,7 +109,7 @@
                 android:text="@string/profile_txt_smail"
                 />
 
-            <TextView
+            <Button
                 android:id="@+id/tv_settings"
                 style="@style/list_txt_Style_without_right"
                 android:layout_marginTop="20dp"
