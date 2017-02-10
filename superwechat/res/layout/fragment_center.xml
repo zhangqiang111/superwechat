@@ -46,15 +46,33 @@
                     android:src="@drawable/em_profile_headphoto_update_icon"
                     />
 
-                <TextView
-                    android:id="@+id/tv_username"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_marginLeft="20dp"
-                    android:layout_toRightOf="@id/user_head_headphoto_update"
-                    android:text="测试"
-                    android:textSize="18sp"/>
+                    android:orientation="vertical"
+                    android:layout_toRightOf="@id/user_head_headphoto_update">
+
+                    <TextView
+                        android:id="@+id/tv_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/user_head_headphoto_update"
+                        android:text="测试"
+                        android:textSize="18sp"/>
+                    <TextView
+                        android:id="@+id/tv_nick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/user_head_headphoto_update"
+                        android:text="测试"
+                        android:layout_marginTop="5dp"
+                        android:textSize="15sp"/>
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/iv_qrcode"
@@ -71,41 +89,44 @@
                 android:background="@color/gray_pressed"
 
                 />
+
             <TextView
                 android:id="@+id/tv_photo"
-                android:layout_marginTop="20dp"
-                android:text="@string/profile_txt_album"
-                android:drawableLeft="@drawable/icon_me_photo"
                 style="@style/list_txt_Style_without_right"
+                android:layout_marginTop="20dp"
+                android:drawableLeft="@drawable/icon_me_photo"
+                android:text="@string/profile_txt_album"
                 />
 
             <TextView
                 android:id="@+id/tv_collect"
-                android:text="@string/profile_txt_collect"
-                android:drawableLeft="@drawable/icon_me_collect"
                 style="@style/list_txt_Style_without_right"
+                android:drawableLeft="@drawable/icon_me_collect"
+                android:text="@string/profile_txt_collect"
                 />
 
             <TextView
                 android:id="@+id/tv_card"
-                android:text="@string/profile_txt_card"
+                style="@style/list_txt_Style_without_right"
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/icon_me_card"
-                style="@style/list_txt_Style_without_right"
+                android:text="@string/profile_txt_card"
                 />
+
             <TextView
                 android:id="@+id/tv_smail"
-                android:text="@string/profile_txt_smail"
+                style="@style/list_txt_Style_without_right"
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/icon_me_smail"
-                style="@style/list_txt_Style_without_right"
+                android:text="@string/profile_txt_smail"
                 />
+
             <TextView
                 android:id="@+id/tv_settings"
-                android:text="@string/profile_txt_setting"
+                style="@style/list_txt_Style_without_right"
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/icon_me_setting"
-                style="@style/list_txt_Style_without_right"
+                android:text="@string/profile_txt_setting"
                 />
         </LinearLayout>
     </ScrollView>
