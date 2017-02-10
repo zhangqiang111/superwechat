@@ -106,4 +106,7 @@
 
     <!--工具类-->
     <string name="msg_1">msg_g</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

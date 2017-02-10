@@ -52,7 +52,7 @@
                 android:onClick="onTabClicked"
                 android:textSize="12sp"
 
-                android:textColor="#9A9A9A"
+                android:textColor="@color/tab_def_title_color_selector"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"/>
@@ -84,7 +84,7 @@
                 android:scaleType="matrix"
                 android:text="@string/contacts"
                 android:background="@null"
-                android:textColor="#9A9A9A"
+                android:textColor="@color/tab_def_title_color_selector"
                 android:textSize="12sp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
@@ -117,7 +117,7 @@
                 android:paddingTop="7dip"
                 android:scaleType="matrix"
                 android:text="@string/discover"
-                android:textColor="#9A9A9A"
+                android:textColor="@color/tab_def_title_color_selector"
                 android:textSize="12sp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
@@ -140,11 +140,11 @@
                 android:paddingTop="7dip"
                 android:scaleType="matrix"
                 android:text="@string/me"
-                android:textColor="#9A9A9A"
+                android:textColor="@color/tab_def_title_color_selector"
                 android:textSize="12sp" />
         </RelativeLayout>
     </LinearLayout>
-    <RelativeLayout
+    <android.support.v4.view.ViewPager
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
