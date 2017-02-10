@@ -98,6 +98,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private  DiscoverFragment mDiscoverFragment;
     SettingsFragment settingFragment;
     private Fragment[] fragments;
+    private CenterFragment mCenterFragment;
     private int index;
     private int currentTabIndex;
     // user logged into another device
@@ -135,7 +136,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mAdapter.addFragment(conversationListFragment,"微信");
         mAdapter.addFragment(contactListFragment,"通讯录");
         mAdapter.addFragment(mDiscoverFragment,"发现");
-        mAdapter.addFragment(settingFragment,"我");
+        mAdapter.addFragment(mCenterFragment,"我");
         mFragmentContainer.setAdapter(mAdapter);
         mFragmentContainer.addOnPageChangeListener(this);
     }
@@ -154,6 +155,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         contactListFragment = new ContactListFragment();
         mDiscoverFragment = new DiscoverFragment();
         settingFragment = new SettingsFragment();
+        mCenterFragment = new CenterFragment();
         fragments = new Fragment[]{conversationListFragment, contactListFragment,mDiscoverFragment, settingFragment};
 
         //register broadcast receiver to receive the change of group from SuperWeChatHelper
