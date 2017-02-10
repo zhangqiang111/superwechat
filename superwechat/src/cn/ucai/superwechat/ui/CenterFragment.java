@@ -140,4 +140,8 @@ public class CenterFragment extends Fragment {
     public void onClick() {
         MFGT.gotoSettings(getActivity());
     }
+    @OnClick(R.id.rl_userProfile)
+    public void onUserProfileClick() {
+        MFGT.gotoUserProfile(getActivity());
+    }
 }
