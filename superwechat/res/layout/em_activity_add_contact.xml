@@ -90,6 +90,28 @@
             android:text="@string/button_add"
             android:textSize="14sp" />
     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/ll_no_finde"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/ease_mm_listitem"
+        android:duplicateParentState="true"
+        android:visibility="gone">
+
+
+        <TextView
+            android:id="@+id/tv_no_finde"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="18dp"
+            android:text="没有找到该用户"
+            android:layout_centerInParent="true"
+            android:textColor="#b3a2a2"
+            android:textSize="16sp" />
+
+
+    </RelativeLayout>
 
 
 </LinearLayout>
