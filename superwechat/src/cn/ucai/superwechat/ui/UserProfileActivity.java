@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.domain.User;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -30,8 +31,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
+import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.db.UserDao;
+import cn.ucai.superwechat.net.NetDao;
+import cn.ucai.superwechat.net.OnCompleteListener;
+import cn.ucai.superwechat.utils.CommonUtils;
 import cn.ucai.superwechat.utils.DisplayUtils;
 import cn.ucai.superwechat.utils.MFGT;
+import cn.ucai.superwechat.utils.PreferenceManager;
+import cn.ucai.superwechat.utils.ResultUtils;
+import cn.ucai.superwechat.widget.I;
 
 public class UserProfileActivity extends BaseActivity implements OnClickListener {
 
@@ -51,7 +60,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
         super.onCreate(arg0);
         setContentView(R.layout.em_activity_user_profile);
         ButterKnife.bind(this);
-        DisplayUtils.initBackWithTitle(this,"个人信息");
+        DisplayUtils.initBackWithTitle(this, "个人信息");
         initData();
     }
 
@@ -94,8 +103,6 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                                 updateRemoteNick(nickString);
                             }
                         }).setNegativeButton(R.string.dl_cancel, null).show();
-                break;
-            case R.id.rl_name:
                 break;
             default:
                 break;
@@ -158,6 +165,37 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
 
     private void updateRemoteNick(final String nickName) {
         dialog = ProgressDialog.show(this, getString(R.string.dl_update_nick), getString(R.string.dl_waiting));
+        NetDao.uploadNick(this, EMClient.getInstance().getCurrentUser(), nickName, new OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                if (s != null) {
+                    Result result = ResultUtils.getResultFromJson(s, User.class);
+                    if (result.isRetMsg()){
+                        User user = (User) result.getRetData();
+                        if (user!=null){
+                            PreferenceManager.init(UserProfileActivity.this);
+                            PreferenceManager.getInstance().setCurrentUserNick(user.getMUserNick());
+                            SuperWeChatHelper.getInstance().saveAppContact(user);
+                            CommonUtils.showShortToast(R.string.toast_updatenick_success);
+                        }
+                    }else {
+                        if (result.getRetCode() == I.MSG_USER_SAME_NICK){
+                            CommonUtils.showShortToast("昵称未修改");
+                        }else {
+                            CommonUtils.showShortToast(R.string.toast_updatenick_fail);
+                        }
+                    }
+
+                } else {
+                    CommonUtils.showShortToast(R.string.toast_updatenick_fail);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                CommonUtils.showShortToast(R.string.toast_updatenick_fail);
+            }
+        });
         new Thread(new Runnable() {
 
             @Override

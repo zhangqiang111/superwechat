@@ -135,7 +135,7 @@ public class UserProfileManager {
 	public boolean updateCurrentUserNickName(final String nickname) {
 		boolean isSuccess = ParseManager.getInstance().updateParseNickName(nickname);
 		if (isSuccess) {
-//			setCurrentUserNick(nickname);
+			setCurrentUserNick(nickname);
 		}
 		return isSuccess;
 	}

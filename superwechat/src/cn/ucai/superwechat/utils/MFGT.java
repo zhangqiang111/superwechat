@@ -19,22 +19,26 @@ import cn.ucai.superwechat.ui.UserProfileActivity;
  */
 
 public class MFGT {
-    public static void startActivity(Activity context, Class<?> cla){
-        context.startActivity(new Intent(context,cla));
-        context.overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+    public static void startActivity(Activity context, Class<?> cla) {
+        context.startActivity(new Intent(context, cla));
+        context.overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
     }
-    public static void finish(Activity activity){
+
+    public static void finish(Activity activity) {
         activity.finish();
-        activity.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+        activity.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
-    public static void startActivity(Activity context, Intent intent){
+
+    public static void startActivity(Activity context, Intent intent) {
         context.startActivity(intent);
-        context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+        context.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
-    public static void gotoRegisterActivity(Activity context){
+
+    public static void gotoRegisterActivity(Activity context) {
         startActivity(context, RegisterActivity.class);
     }
-    public static void gotoLoginActivity(Activity context){
+
+    public static void gotoLoginActivity(Activity context) {
         startActivity(context, LoginActivity.class);
     }
 
@@ -43,14 +47,13 @@ public class MFGT {
     }
 
 
-
     public static void gotoSettings(FragmentActivity activity) {
         startActivity(activity, SettingsActivity.class);
     }
 
     public static void gotoLoginActivityClear(Activity activity) {
-        startActivity(activity,new Intent(activity,LoginActivity.class).
-                setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK));
+        startActivity(activity, new Intent(activity, LoginActivity.class).
+                setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
     }
 
     public static void gotoUserProfile(FragmentActivity activity) {

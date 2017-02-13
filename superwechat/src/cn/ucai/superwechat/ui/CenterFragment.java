@@ -125,6 +125,11 @@ public class CenterFragment extends Fragment {
         EaseUserUtils.setAppUserAvatar(getContext(), username, mUserHeadAvatar);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
