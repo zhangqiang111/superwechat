@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -23,9 +24,15 @@ import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.domain.User;
+import com.hyphenate.easeui.utils.EaseImageUtils;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +50,7 @@ import cn.ucai.superwechat.utils.ResultUtils;
 import cn.ucai.superwechat.widget.I;
 
 public class UserProfileActivity extends BaseActivity implements OnClickListener {
-
+    private static final String TAG = "UserProfileActivity";
     private static final int REQUESTCODE_PICK = 1;
     private static final int REQUESTCODE_CUTTING = 2;
     @BindView(R.id.tv_nick)
@@ -170,61 +177,37 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
             public void onSuccess(String s) {
                 if (s != null) {
                     Result result = ResultUtils.getResultFromJson(s, User.class);
-                    if (result.isRetMsg()){
+                    if (result.isRetMsg()) {
                         User user = (User) result.getRetData();
-                        if (user!=null){
+                        if (user != null) {
+                            dialog.dismiss();
+                            mTvName.setText(user.getMUserNick());
                             PreferenceManager.init(UserProfileActivity.this);
                             PreferenceManager.getInstance().setCurrentUserNick(user.getMUserNick());
                             SuperWeChatHelper.getInstance().saveAppContact(user);
                             CommonUtils.showShortToast(R.string.toast_updatenick_success);
                         }
-                    }else {
-                        if (result.getRetCode() == I.MSG_USER_SAME_NICK){
+                    } else {
+                        dialog.dismiss();
+                        if (result.getRetCode() == I.MSG_USER_SAME_NICK) {
                             CommonUtils.showShortToast("昵称未修改");
-                        }else {
+                        } else {
                             CommonUtils.showShortToast(R.string.toast_updatenick_fail);
                         }
                     }
 
                 } else {
+                    dialog.dismiss();
                     CommonUtils.showShortToast(R.string.toast_updatenick_fail);
                 }
             }
 
             @Override
             public void onError(String error) {
+                dialog.dismiss();
                 CommonUtils.showShortToast(R.string.toast_updatenick_fail);
             }
         });
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                boolean updatenick = SuperWeChatHelper.getInstance().getUserProfileManager().updateCurrentUserNickName(nickName);
-                if (UserProfileActivity.this.isFinishing()) {
-                    return;
-                }
-                if (!updatenick) {
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(UserProfileActivity.this, getString(R.string.toast_updatenick_fail), Toast.LENGTH_SHORT)
-                                    .show();
-                            dialog.dismiss();
-                        }
-                    });
-                } else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            dialog.dismiss();
-                            Toast.makeText(UserProfileActivity.this, getString(R.string.toast_updatenick_success), Toast.LENGTH_SHORT)
-                                    .show();
-                            mTvName.setText(nickName);
-                        }
-                    });
-                }
-            }
-        }).start();
     }
 
     @Override
@@ -238,7 +221,8 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                 break;
             case REQUESTCODE_CUTTING:
                 if (data != null) {
-                    setPicToView(data);
+//                    setPicToView(data);
+                    uploadAppUserAvatar(data);
                 }
                 break;
             default:
@@ -302,6 +286,68 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
         }).start();
 
         dialog.show();
+    }
+
+    private void uploadAppUserAvatar(Intent data) {
+        File file = saveBitmapFile(data);
+        if (file == null) {
+            return;
+        }
+        dialog = ProgressDialog.show(this, getString(R.string.dl_update_photo), getString(R.string.dl_waiting));
+        NetDao.uploadAvatar(this, EMClient.getInstance().getCurrentUser(), file, new OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                if (s != null) {
+                    Result result = ResultUtils.getResultFromJson(s, User.class);
+                    if (result != null) {
+                        User user = (User) result.getRetData();
+                        Log.e(TAG, user.toString());
+                        if (user != null && result.isRetMsg()) {
+                            dialog.dismiss();
+                            PreferenceManager.getInstance().setCurrentUserAvatar(user.getAvatar());
+                            SuperWeChatHelper.getInstance().saveAppContact(user);
+                            EaseUserUtils.setAppUserAvatar(UserProfileActivity.this,user.getMUserName(), mHeadAvatar);
+                            CommonUtils.showShortToast(getString(R.string.toast_updatephoto_success));
+                        } else {
+                            dialog.dismiss();
+                            CommonUtils.showShortToast("更新失败1");
+                        }
+                    }
+
+                } else {
+                    dialog.dismiss();
+                    CommonUtils.showShortToast("更新失败2");
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+    }
+
+
+    private File saveBitmapFile(Intent data) {
+        Bundle extras = data.getExtras();
+        if (extras != null) {
+            Bitmap photo = extras.getParcelable("data");
+            String imagePath = EaseImageUtils.getImagePath(EMClient.getInstance().getCurrentUser() + I.AVATAR_SUFFIX_JPG);
+            File file = new File(imagePath);
+            Log.e("Path", file.getAbsolutePath());
+            try {
+                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+                photo.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                bos.flush();
+                bos.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return file;
+        }
+        return null;
     }
 
 
