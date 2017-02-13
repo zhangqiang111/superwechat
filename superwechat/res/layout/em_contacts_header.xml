@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
     <cn.ucai.superwechat.widget.ContactItemView
         android:id="@+id/application_item"
         android:layout_width="match_parent"
@@ -23,6 +22,7 @@
         android:id="@+id/chat_room_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:contactItemImage="@drawable/em_groups_icon"
         app:contactItemName="@string/chat_room" />
 
@@ -30,6 +30,7 @@
         android:id="@+id/robot_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:contactItemImage="@drawable/em_groups_icon"
         app:contactItemName="@string/robot_chat" />
 

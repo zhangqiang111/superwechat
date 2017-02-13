@@ -33,7 +33,9 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,9 +67,12 @@ import cn.ucai.superwechat.db.InviteMessgeDao;
 import cn.ucai.superwechat.db.UserDao;
 import cn.ucai.superwechat.runtimepermissions.PermissionsManager;
 import cn.ucai.superwechat.runtimepermissions.PermissionsResultAction;
+import cn.ucai.superwechat.utils.MFGT;
+import cn.ucai.superwechat.widget.TitleMenu.ActionItem;
+import cn.ucai.superwechat.widget.TitleMenu.TitlePopup;
 
 @SuppressLint("NewApi")
-public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener{
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
     protected static final String TAG = "MainActivity";
     @BindView(R.id.unread_msg_number)
@@ -86,6 +91,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     Button mBtnDiscover;
     @BindView(R.id.btn_setting)
     Button mBtnSetting;
+    @BindView(R.id.iv_add)
+    ImageView mIvAdd;
     // textview for unread message count
     private TextView unreadLabel;
     // textview for unread event message
@@ -93,7 +100,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     private Button[] mTabs;
     private ContactListFragment contactListFragment;
-    private  DiscoverFragment mDiscoverFragment;
+    private DiscoverFragment mDiscoverFragment;
     SettingsActivity settingFragment;
     private Fragment[] fragments;
     private CenterFragment mCenterFragment;
@@ -104,6 +111,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     // user account was removed
     private boolean isCurrentAccountRemoved = false;
     MainTabAdpter mAdapter;
+    TitlePopup mPopup;
 
 
     /**
@@ -131,10 +139,10 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     private void iniViewPager() {
         mAdapter = new MainTabAdpter(getSupportFragmentManager());
-        mAdapter.addFragment(conversationListFragment,"微信");
-        mAdapter.addFragment(contactListFragment,"通讯录");
-        mAdapter.addFragment(mDiscoverFragment,"发现");
-        mAdapter.addFragment(mCenterFragment,"我");
+        mAdapter.addFragment(conversationListFragment, "微信");
+        mAdapter.addFragment(contactListFragment, "通讯录");
+        mAdapter.addFragment(mDiscoverFragment, "发现");
+        mAdapter.addFragment(mCenterFragment, "我");
         mFragmentContainer.setAdapter(mAdapter);
         mFragmentContainer.addOnPageChangeListener(this);
     }
@@ -220,7 +228,27 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         // select first tab
         mTabs[0].setSelected(true);
         mFragmentContainer.setCurrentItem(0);
+
+        mPopup = new TitlePopup(this, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mPopup.addAction(new ActionItem(this, R.string.menu_groupchat, R.drawable.icon_menu_group));
+        mPopup.addAction(new ActionItem(this, R.string.menu_addfriend, R.drawable.icon_menu_addfriend));
+        mPopup.addAction(new ActionItem(this, R.string.menu_qrcode, R.drawable.icon_menu_sao));
+        mPopup.addAction(new ActionItem(this, R.string.menu_money, R.drawable.icon_menu_money));
+        mPopup.setItemOnClickListener(listener);
+
     }
+
+    TitlePopup.OnItemOnClickListener listener = new TitlePopup.OnItemOnClickListener() {
+        @Override
+        public void onItemClick(ActionItem item, int position) {
+            switch (position) {
+                case 1:
+                    MFGT.gotoAddContact(MainActivity.this);
+                    break;
+            }
+
+        }
+    };
 
 
     EMMessageListener messageListener = new EMMessageListener() {
@@ -338,13 +366,14 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 break;
 
         }
-        Log.e("currentIndex",currentTabIndex+"");
-        Log.e("Index",index+"");
+        Log.e("currentIndex", currentTabIndex + "");
+        Log.e("Index", index + "");
         if (currentTabIndex != index) {
             setStatus();
             mFragmentContainer.setCurrentItem(index);
         }
     }
+
     private void setStatus() {
         for (int i = 0; i < mTabs.length; i++) {
             if (index != i) {
@@ -370,6 +399,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     public void onPageScrollStateChanged(int i) {
 
+    }
+
+    @OnClick(R.id.iv_add)
+    public void onPopup() {
+        mPopup.show(findViewById(R.id.layout_title));
     }
 
     public class MyContactListener implements EMContactListener {

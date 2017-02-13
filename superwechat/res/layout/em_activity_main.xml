@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/common_bg" >
 
-
+<include  android:id="@+id/il" layout="@layout/item_title"/>
 
     <LinearLayout
         android:id="@+id/main_bottom"
@@ -148,5 +148,6 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/il"
         android:layout_above="@id/main_bottom" />
 </RelativeLayout>
