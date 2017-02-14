@@ -2,6 +2,7 @@ package cn.ucai.superwechat.utils;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import cn.ucai.superwechat.R;
@@ -31,6 +32,12 @@ public class DisplayUtils {
         if (b) {
             TextView textView = (TextView) activity.findViewById(R.id.top_text);
             textView.setVisibility(View.INVISIBLE);
+        }
+    }
+    public static void setButtonInVisible(Activity activity, boolean b) {
+        if (b) {
+            Button button = (Button) activity.findViewById(R.id.btn_sendRequest);
+            button.setVisibility(View.VISIBLE);
         }
     }
 }

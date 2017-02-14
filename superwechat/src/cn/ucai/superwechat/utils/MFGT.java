@@ -9,6 +9,7 @@ import com.hyphenate.easeui.domain.User;
 
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.ui.AddContactActivity;
+import cn.ucai.superwechat.ui.AddFriendActivity;
 import cn.ucai.superwechat.ui.CenterFragment;
 import cn.ucai.superwechat.ui.ContactInfoActivity;
 import cn.ucai.superwechat.ui.GuideActivity;
@@ -79,5 +80,10 @@ public class MFGT {
         startActivity(activity,intent);
     }
 
+    public static void gotAddFriendActivity(Activity activity, User addU) {
+        Intent intent = new Intent(activity, AddFriendActivity.class);
+        intent.putExtra(I.User.USER_NAME,addU);
+        startActivity(activity,intent);
+    }
 }
 

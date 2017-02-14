@@ -1,5 +1,6 @@
 package cn.ucai.superwechat.ui;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -7,9 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.domain.User;
 import com.hyphenate.easeui.utils.EaseUserUtils;
+import com.hyphenate.easeui.widget.EaseAlertDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,6 +21,7 @@ import butterknife.OnClick;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.utils.DisplayUtils;
+import cn.ucai.superwechat.utils.MFGT;
 import cn.ucai.superwechat.widget.I;
 
 public class ContactInfoActivity extends AppCompatActivity {
@@ -33,7 +38,8 @@ public class ContactInfoActivity extends AppCompatActivity {
     Button mBtnSendVideo;
     @BindView(R.id.btn_addContact)
     Button mBtnAddContact;
-
+    private ProgressDialog progressDialog;
+    User addU;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +61,7 @@ public class ContactInfoActivity extends AppCompatActivity {
             mBtnSendMessage.setVisibility(View.GONE);
             mBtnSendVideo.setVisibility(View.GONE);
             mBtnAddContact.setVisibility(View.VISIBLE);
+            addU = user;
         }
     }
 
@@ -66,6 +73,7 @@ public class ContactInfoActivity extends AppCompatActivity {
             case R.id.btn_sendVideo:
                 break;
             case R.id.btn_addContact:
+                MFGT.gotAddFriendActivity(ContactInfoActivity.this,addU);
                 break;
         }
     }
