@@ -18,6 +18,34 @@ public class InviteMessage {
 	private long time;
 	private String reason;
 
+	private String muserNick;
+	private String mavatarSuffix;
+	private String mavatarLastUpdateTime;
+
+	public String getMavatarLastUpdateTime() {
+		return mavatarLastUpdateTime;
+	}
+
+	public void setMavatarLastUpdateTime(String mavatarLastUpdateTime) {
+		this.mavatarLastUpdateTime = mavatarLastUpdateTime;
+	}
+
+	public String getMavatarSuffix() {
+		return mavatarSuffix;
+	}
+
+	public void setMavatarSuffix(String mavatarSuffix) {
+		this.mavatarSuffix = mavatarSuffix;
+	}
+
+	public String getMuserNick() {
+		return muserNick;
+	}
+
+	public void setMuserNick(String muserNick) {
+		this.muserNick = muserNick;
+	}
+
 	private InviteMesageStatus status;
 	private String groupId;
 	private String groupName;
@@ -120,6 +148,10 @@ public class InviteMessage {
 		GROUPINVITATION_ACCEPTED,
         /**remote user declined your invitation**/
 		GROUPINVITATION_DECLINED
+	}
+	public String getAvatar() {
+		String path = "http://101.251.196.90:8000/SuperWeChatServerV2.0/downloadAvatar?name_or_hxid="+getFrom()+"&avatarType=user_avatar&m_avatar_suffix="+getMavatarSuffix()+"&updatetime="+getMavatarLastUpdateTime();
+		return path;
 	}
 	
 }

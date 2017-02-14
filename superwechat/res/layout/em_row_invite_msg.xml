@@ -81,7 +81,7 @@
             android:paddingRight="7dp"
             android:text="@string/agree"
             android:textSize="13sp"
-            android:visibility="gone" />
+            android:visibility="visible" />
         
         <Button
             android:id="@+id/user_state"
