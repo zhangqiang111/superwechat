@@ -20,8 +20,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
+import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.net.NetDao;
+import cn.ucai.superwechat.net.OnCompleteListener;
 import cn.ucai.superwechat.utils.DisplayUtils;
 import cn.ucai.superwechat.utils.MFGT;
+import cn.ucai.superwechat.utils.ResultUtils;
 import cn.ucai.superwechat.widget.I;
 
 public class ContactInfoActivity extends AppCompatActivity {
@@ -40,6 +44,7 @@ public class ContactInfoActivity extends AppCompatActivity {
     Button mBtnAddContact;
     private ProgressDialog progressDialog;
     User addU;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +56,19 @@ public class ContactInfoActivity extends AppCompatActivity {
 
     private void initData() {
         User user = (User) getIntent().getSerializableExtra(I.User.USER_NAME);
+        if (user != null) {
+            showInfo(user);
+        }else {
+            String username = getIntent().getStringExtra(I.User.TABLE_NAME);
+            if (username==null){
+                MFGT.finish(this);
+            }else {
+                syncInfo(username);
+            }
+        }
+    }
+
+    private void showInfo(User user) {
         mTvUsername.setText(user.getMUserName());
         EaseUserUtils.setAppUserAvatar(this, user.getMUserName(), mUserHeadAvatar);
         User u = SuperWeChatHelper.getInstance().getAppContactList().get(user.getMUserName());
@@ -65,6 +83,31 @@ public class ContactInfoActivity extends AppCompatActivity {
         }
     }
 
+    private void syncInfo(String username) {
+        NetDao.getUserInfoByName(this, username, new OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                if (s != null) {
+                    Result result = ResultUtils.getResultFromJson(s, User.class);
+                    if (result != null) {
+                        if (result.isRetMsg()) {
+                            User user = (User) result.getRetData();
+                            if (user != null) {
+                                showInfo(user);
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+    }
+
     @OnClick({R.id.btn_sendMessage, R.id.btn_sendVideo, R.id.btn_addContact})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -73,7 +116,7 @@ public class ContactInfoActivity extends AppCompatActivity {
             case R.id.btn_sendVideo:
                 break;
             case R.id.btn_addContact:
-                MFGT.gotAddFriendActivity(ContactInfoActivity.this,addU);
+                MFGT.gotAddFriendActivity(ContactInfoActivity.this, addU);
                 break;
         }
     }

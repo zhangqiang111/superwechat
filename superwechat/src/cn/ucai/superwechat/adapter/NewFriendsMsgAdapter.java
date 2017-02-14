@@ -23,6 +23,7 @@ import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.db.InviteMessgeDao;
 import cn.ucai.superwechat.domain.InviteMessage;
 import cn.ucai.superwechat.domain.InviteMessage.InviteMesageStatus;
+import cn.ucai.superwechat.utils.MFGT;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -36,6 +37,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,12 +65,13 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 			holder.status = (Button) convertView.findViewById(R.id.user_state);
 			holder.groupContainer = (LinearLayout) convertView.findViewById(R.id.ll_group);
 			holder.groupname = (TextView) convertView.findViewById(R.id.tv_groupName);
+			holder.mLayout = (RelativeLayout) convertView.findViewById(R.id.rl_new_friend);
 			// holder.time = (TextView) convertView.findViewById(R.id.time);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		
+
 		String str1 = context.getResources().getString(R.string.Has_agreed_to_your_friend_request);
 		String str2 = context.getResources().getString(R.string.agree);
 		
@@ -85,7 +88,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 		final InviteMessage msg = getItem(position);
 		if (msg != null) {
 		    
-		    holder.agree.setVisibility(View.INVISIBLE);
+//		    holder.agree.setVisibility(View.INVISIBLE);
 		    
 			if(msg.getGroupId() != null){ // show group name
 				holder.groupContainer.setVisibility(View.VISIBLE);
@@ -162,6 +165,12 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                 holder.status.setBackgroundDrawable(null);
                 holder.status.setEnabled(false);
             }
+			holder.mLayout.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					MFGT.gotoContactInfoActivity(context,msg.getFrom());
+				}
+			});
 		}
 
 		return convertView;
@@ -285,6 +294,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
     }
 
 	private static class ViewHolder {
+		RelativeLayout mLayout;
 		ImageView avator;
 		TextView name;
 		TextView reason;

@@ -79,6 +79,11 @@ public class MFGT {
         intent.putExtra(I.User.USER_NAME,user);
         startActivity(activity,intent);
     }
+    public static void gotoContactInfoActivity(Context context, String username) {
+        Intent intent = new Intent(context, ContactInfoActivity.class);
+        intent.putExtra(I.User.TABLE_NAME,username);
+        startActivity((Activity) context,intent);
+    }
 
     public static void gotAddFriendActivity(Activity activity, User addU) {
         Intent intent = new Intent(activity, AddFriendActivity.class);
