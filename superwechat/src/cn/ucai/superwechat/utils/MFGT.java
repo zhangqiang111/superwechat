@@ -10,12 +10,14 @@ import com.hyphenate.easeui.domain.User;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.ui.AddContactActivity;
 import cn.ucai.superwechat.ui.CenterFragment;
+import cn.ucai.superwechat.ui.ContactInfoActivity;
 import cn.ucai.superwechat.ui.GuideActivity;
 import cn.ucai.superwechat.ui.LoginActivity;
 import cn.ucai.superwechat.ui.MainActivity;
 import cn.ucai.superwechat.ui.RegisterActivity;
 import cn.ucai.superwechat.ui.SettingsActivity;
 import cn.ucai.superwechat.ui.UserProfileActivity;
+import cn.ucai.superwechat.widget.I;
 
 
 /**
@@ -70,5 +72,12 @@ public class MFGT {
 
     public static void gotoFirent(Activity activity, User user) {
     }
+
+    public static void gotoContactInfoActivity(Activity activity, User user) {
+        Intent intent = new Intent(activity, ContactInfoActivity.class);
+        intent.putExtra(I.User.USER_NAME,user);
+        startActivity(activity,intent);
+    }
+
 }
 

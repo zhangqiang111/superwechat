@@ -29,6 +29,7 @@ import com.hyphenate.easeui.widget.EaseAlertDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.bean.Result;
@@ -47,6 +48,7 @@ public class AddContactActivity extends BaseActivity {
     private Button searchBtn;
     private String toAddUsername;
     private ProgressDialog progressDialog;
+    String addName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,9 +111,7 @@ public class AddContactActivity extends BaseActivity {
                             User user = (User) result.getRetData();
                             if (user != null) {
                                 isSuccess = true;
-                                searchedUserLayout.setVisibility(View.VISIBLE);
-                                nameText.setText(toAddUsername);
-                                MFGT.gotoFirent(AddContactActivity.this, user);
+                                MFGT.gotoContactInfoActivity(AddContactActivity.this,user);
                             }
 
                         }
@@ -189,4 +189,5 @@ public class AddContactActivity extends BaseActivity {
     public void back(View v) {
         finish();
     }
+
 }

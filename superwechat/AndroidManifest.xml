@@ -507,6 +507,8 @@
         </activity>
         <activity android:name=".ui.PersonInfoActivity">
         </activity>
+        <activity android:name=".ui.ContactInfoActivity">
+        </activity>
     </application>
 
 </manifest>
