@@ -78,7 +78,7 @@ public class ContactListFragment extends EaseContactListFragment {
     
     @Override
     public void refresh() {
-        Map<String, User> m = cn.ucai.superwechat.SuperWeChatHelper.getInstance().getAppContactList();
+        Map<String, User> m = SuperWeChatHelper.getInstance().getAppContactList();
         if (m instanceof Hashtable<?, ?>) {
             //noinspection unchecked
             m = (Map<String, User>) ((Hashtable<String, User>)m).clone();
@@ -109,7 +109,7 @@ public class ContactListFragment extends EaseContactListFragment {
             }
         });
         //设置联系人数据
-        Map<String, User> m = cn.ucai.superwechat.SuperWeChatHelper.getInstance().getAppContactList();
+        Map<String, User> m = SuperWeChatHelper.getInstance().getAppContactList();
         if (m instanceof Hashtable<?, ?>) {
             m = (Map<String, User>) ((Hashtable<String, User>)m).clone();
         }
@@ -119,9 +119,9 @@ public class ContactListFragment extends EaseContactListFragment {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                User user = (User)listView.getItemAtPosition(position);
+                EaseUser user = (EaseUser)listView.getItemAtPosition(position);
                 if (user != null) {
-                    String username = user.getMUserName();
+                    String username = user.getUsername();
                     // demo中直接进入聊天页面，实际一般是进入用户详情页
                     startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", username));
                 }
@@ -237,7 +237,7 @@ public class ContactListFragment extends EaseContactListFragment {
 	 * 
 	 * @param toDeleteUser
 	 */
-	public void deleteContact(final User tobeDeleteUser) {
+ 	public void deleteContact(final User tobeDeleteUser) {
 		String st1 = getResources().getString(R.string.deleting);
 		final String st2 = getResources().getString(R.string.Delete_failed);
 		final ProgressDialog pd = new ProgressDialog(getActivity());
