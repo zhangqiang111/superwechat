@@ -71,8 +71,6 @@ public class MFGT {
         startActivity(activity, AddContactActivity.class);
     }
 
-    public static void gotoFirent(Activity activity, User user) {
-    }
 
     public static void gotoContactInfoActivity(Activity activity, User user) {
         Intent intent = new Intent(activity, ContactInfoActivity.class);

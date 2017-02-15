@@ -1,6 +1,7 @@
 package cn.ucai.superwechat.ui;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -112,6 +113,7 @@ public class ContactInfoActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_sendMessage:
+                startActivity(new Intent(this, ChatActivity.class).putExtra("userId", mTvUsername.getText().toString()));
                 break;
             case R.id.btn_sendVideo:
                 break;

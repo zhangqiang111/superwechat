@@ -86,15 +86,17 @@ public class SuperWeChatDBManager {
                 user.setMAvatarLastUpdateTime(cursor.getString(cursor.getColumnIndex(UserDao.USER_COLUMN_AVATAR_UPDATE_TIME)));
                 EaseCommonUtils.setAppUserInitialLetter(user);
                 users.put(user.getMUserName(), user);
-                cursor.close();
             }
+            cursor.close();
         }
-            return users;
+        return users;
     }
-        /**
-         * delete a contact
-         * @param username
-         */
+
+    /**
+     * delete a contact
+     *
+     * @param username
+     */
 
     synchronized public void deleteContact(String username) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -234,7 +236,7 @@ public class SuperWeChatDBManager {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         List<InviteMessage> msgs = new ArrayList<InviteMessage>();
         if (db.isOpen()) {
-            Cursor cursor = db.rawQuery("select * from " + InviteMessgeDao.TABLE_NAME + " ORDER BY "+InviteMessgeDao.COLUMN_NAME_TIME+" desc ", null);
+            Cursor cursor = db.rawQuery("select * from " + InviteMessgeDao.TABLE_NAME + " ORDER BY " + InviteMessgeDao.COLUMN_NAME_TIME + " desc ", null);
             while (cursor.moveToNext()) {
                 InviteMessage msg = new InviteMessage();
                 int id = cursor.getInt(cursor.getColumnIndex(InviteMessgeDao.COLUMN_NAME_ID));
@@ -401,16 +403,16 @@ public class SuperWeChatDBManager {
             for (EaseUser user : contactList) {
                 ContentValues values = new ContentValues();
                 values.put(UserDao.COLUMN_NAME_ID, user.getUsername());
-                if(user.getNick() != null)
+                if (user.getNick() != null)
                     values.put(UserDao.COLUMN_NAME_NICK, user.getNick());
-                if(user.getAvatar() != null)
+                if (user.getAvatar() != null)
                     values.put(UserDao.COLUMN_NAME_AVATAR, user.getAvatar());
                 db.replace(UserDao.TABLE_NAME, null, values);
             }
         }
     }
 
-    public Map<String,EaseUser> getContactList() {
+    public Map<String, EaseUser> getContactList() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Map<String, EaseUser> users = new Hashtable<String, EaseUser>();
         if (db.isOpen()) {
@@ -423,7 +425,7 @@ public class SuperWeChatDBManager {
                 user.setNick(nick);
                 user.setAvatar(avatar);
                 if (username.equals(Constant.NEW_FRIENDS_USERNAME) || username.equals(Constant.GROUP_USERNAME)
-                        || username.equals(Constant.CHAT_ROOM)|| username.equals(Constant.CHAT_ROBOT)) {
+                        || username.equals(Constant.CHAT_ROOM) || username.equals(Constant.CHAT_ROBOT)) {
                     user.setInitialLetter("");
                 } else {
                     EaseCommonUtils.setUserInitialLetter(user);
