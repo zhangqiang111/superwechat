@@ -68,6 +68,7 @@ import cn.ucai.superwechat.db.UserDao;
 import cn.ucai.superwechat.runtimepermissions.PermissionsManager;
 import cn.ucai.superwechat.runtimepermissions.PermissionsResultAction;
 import cn.ucai.superwechat.utils.MFGT;
+import cn.ucai.superwechat.widget.I;
 import cn.ucai.superwechat.widget.TitleMenu.ActionItem;
 import cn.ucai.superwechat.widget.TitleMenu.TitlePopup;
 
@@ -631,6 +632,12 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         showExceptionDialogFromIntent(intent);
+        int isChat = intent.getIntExtra(I.BACK_MAIN_FROM_CHAT,0);
+        Log.e(TAG,"isChat "+isChat);
+        if (isChat>0){
+            mTabs[0].setSelected(true);
+            mFragmentContainer.setCurrentItem(0);
+        }
     }
 
     /**

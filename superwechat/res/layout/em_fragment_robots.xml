@@ -5,13 +5,13 @@
     android:background="@color/common_bg"
     android:orientation="vertical" >
 
-    <RelativeLayout
+	<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         android:background="@color/top_bar_normal_bg"
         android:gravity="center_vertical" >
 
-      <include 
+      <include
           layout="@layout/ease_commom_back_btn"
           />
 
@@ -22,11 +22,11 @@
             android:text="@string/robot_chat"
             android:textColor="@color/bottom_text_color_normal"
             android:textSize="18sp" />
-        
+
     </RelativeLayout>
 
-    
-    <FrameLayout
+
+	<FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
         

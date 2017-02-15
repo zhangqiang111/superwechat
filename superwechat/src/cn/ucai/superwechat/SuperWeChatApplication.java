@@ -39,7 +39,7 @@ public class SuperWeChatApplication extends Application {
         instance = this;
         
         //init demo helper
-        cn.ucai.superwechat.SuperWeChatHelper.getInstance().init(applicationContext);
+        SuperWeChatHelper.getInstance().init(applicationContext);
 		//red packet code : 初始化红包上下文，开启日志输出开关
 		RedPacket.getInstance().initContext(applicationContext);
 		RedPacket.getInstance().setDebugMode(true);
