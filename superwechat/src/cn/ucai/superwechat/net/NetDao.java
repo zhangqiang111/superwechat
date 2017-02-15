@@ -78,7 +78,7 @@ public class NetDao {
     public static void downLoadAllContactList(Context context, String username,OnCompleteListener<String> listener){
         OkHttpUtils<String> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_DOWNLOAD_CONTACT_ALL_LIST)
-                .addParam(I.User.USER_NAME,username)
+                .addParam(I.Contact.USER_NAME,username)
                 .targetClass(String.class)
                 .execute(listener);
     }
