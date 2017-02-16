@@ -116,6 +116,8 @@ public class ContactInfoActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ChatActivity.class).putExtra("userId", mTvUsername.getText().toString()));
                 break;
             case R.id.btn_sendVideo:
+                startActivity(new Intent(this, VoiceCallActivity.class).putExtra("username", addU.getMUserName())
+                        .putExtra("isComingCall", false));
                 break;
             case R.id.btn_addContact:
                 MFGT.gotAddFriendActivity(ContactInfoActivity.this, addU);

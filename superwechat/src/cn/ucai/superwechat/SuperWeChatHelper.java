@@ -278,7 +278,6 @@ public class SuperWeChatHelper {
                 return getAppUserInfo(username);
             }
         });
-
         //set options
         easeUI.setSettingsProvider(new EaseSettingsProvider() {
 
@@ -711,6 +710,9 @@ public class SuperWeChatHelper {
             localUsers.remove(username);
             userDao.deleteContact(username);
             inviteMessgeDao.deleteMessage(username);
+
+            SuperWeChatHelper.getInstance().getAppContactList().remove(username);
+            userDao.deleteAppContact(username);
 
             broadcastManager.sendBroadcast(new Intent(Constant.ACTION_CONTACT_CHANAGED));
         }
