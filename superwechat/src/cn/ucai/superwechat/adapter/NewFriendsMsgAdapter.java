@@ -97,7 +97,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 
 			EaseUserUtils.setAppUserAvatarByPath(context,msg.getAvatar(),holder.avator);
 			holder.reason.setText(msg.getReason());
-			holder.name.setText(msg.getMuserNick());
+			holder.name.setText(msg.getFrom());
 			// holder.time.setText(DateUtils.getTimestampString(new
 			// Date(msg.getTime())));
 			if (msg.getStatus() == InviteMesageStatus.BEAGREED) {
