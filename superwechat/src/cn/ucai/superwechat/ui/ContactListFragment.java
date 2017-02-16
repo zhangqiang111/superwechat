@@ -20,9 +20,13 @@ import com.hyphenate.chat.EMClient;
 
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
+import cn.ucai.superwechat.bean.Result;
 import cn.ucai.superwechat.db.InviteMessgeDao;
 import cn.ucai.superwechat.db.UserDao;
+import cn.ucai.superwechat.net.NetDao;
+import cn.ucai.superwechat.net.OnCompleteListener;
 import cn.ucai.superwechat.utils.MFGT;
+import cn.ucai.superwechat.utils.ResultUtils;
 import cn.ucai.superwechat.widget.ContactItemView;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.domain.User;
@@ -33,6 +37,7 @@ import com.hyphenate.util.NetUtils;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -215,6 +220,8 @@ public class ContactListFragment extends EaseContactListFragment {
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
+        Log.e(TAG,"item.getItemId()"+item.getItemId());
+        Log.e(TAG,"R.id.delete_contact"+item.getItemId());
 		if (item.getItemId() == R.id.delete_contact) {
 			try {
                 // delete contact
@@ -226,10 +233,10 @@ public class ContactListFragment extends EaseContactListFragment {
                 e.printStackTrace();
             }
 			return true;
-		}else if(item.getItemId() == R.id.add_to_blacklist){
+		}/*else if(item.getItemId() == R.id.add_to_blacklist){
 			moveToBlacklist(toBeProcessUsername);
 			return true;
-		}
+		}*/
 		return super.onContextItemSelected(item);
 	}
 
@@ -246,6 +253,32 @@ public class ContactListFragment extends EaseContactListFragment {
 		pd.setMessage(st1);
 		pd.setCanceledOnTouchOutside(false);
 		pd.show();
+        NetDao.deleteContact(getContext(), EMClient.getInstance().getCurrentUser(), tobeDeleteUser.getMUserName(), new OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                Log.e(TAG,s.toString());
+                if (s!=null){
+                    Result result = ResultUtils.getResultFromJson(s, User.class);
+                    if (result!=null&&result.isRetMsg()){
+                        UserDao dao = new UserDao(getActivity());
+                        dao.deleteAppContact(tobeDeleteUser.getMUserName());
+                        SuperWeChatHelper.getInstance().getAppContactList().remove(tobeDeleteUser.getMUserName());
+                        getActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+                                pd.dismiss();
+                                contactList.remove(tobeDeleteUser);
+                                contactListLayout.refresh();
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
 		new Thread(new Runnable() {
 			public void run() {
 				try {
