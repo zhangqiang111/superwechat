@@ -157,7 +157,7 @@ public class NewGroupActivity extends BaseActivity {
                 final String groupName = groupNameEditText.getText().toString().trim();
                 String desc = introductionEditText.getText().toString();
                 String[] members = data.getStringArrayExtra("newmembers");
-                Log.e(TAG,"members"+members);
+                Log.e(TAG, "members" + members);
                 try {
                     EMGroupOptions option = new EMGroupOptions();
                     option.maxUsers = 200;
@@ -171,7 +171,7 @@ public class NewGroupActivity extends BaseActivity {
                         option.style = memberCheckbox.isChecked() ? EMGroupStyle.EMGroupStylePrivateMemberCanInvite : EMGroupStyle.EMGroupStylePrivateOnlyOwnerInvite;
                     }
                     EMGroup group = EMClient.getInstance().groupManager().createGroup(groupName, desc, members, reason, option);
-                    createAppGroup(group);
+                    createAppGroup(group, members);
                 } catch (final HyphenateException e) {
                     runOnUiThread(new Runnable() {
                         public void run() {
@@ -236,7 +236,7 @@ public class NewGroupActivity extends BaseActivity {
         });
     }
 
-    private void createAppGroup(final EMGroup group) {
+    private void createAppGroup(final EMGroup group, final String[] members) {
         NetDao.createGroup(this, group, file, new OnCompleteListener<String>() {
             @Override
             public void onSuccess(String s) {
@@ -246,8 +246,8 @@ public class NewGroupActivity extends BaseActivity {
                     if (result.isRetMsg()) {
                         Log.e(TAG, "group.getMemberCount" + group.getMemberCount());
                         Log.e(TAG, "group.getMembers()" + group.getMembers());
-                        if (group.getMemberCount() > 1) {
-                            addGroupMembers(group);
+                        if (members!=null&&members.length>0) {
+                            addGroupMembers(group.getGroupId(), members);
                         } else {
                             createGroupSuccess();
                         }
@@ -271,8 +271,8 @@ public class NewGroupActivity extends BaseActivity {
         });
     }
 
-    private void addGroupMembers(EMGroup group) {
-        NetDao.addGroupMembers(this, getGropMembers(group.getMembers()), group.getGroupId(), new OnCompleteListener<String>() {
+    private void addGroupMembers(String hxid, String[] members) {
+        NetDao.addGroupMembers(this, getGropMembers(members), hxid, new OnCompleteListener<String>() {
             @Override
             public void onSuccess(String s) {
                 Log.e(TAG, "s " + s);
@@ -300,11 +300,12 @@ public class NewGroupActivity extends BaseActivity {
 
     }
 
-    private String getGropMembers(List<String> members) {
+    private String getGropMembers(String[] members) {
         String membersStr = "";
-        members.remove(EMClient.getInstance().getCurrentUser());
-        for (String s : members) {
-            membersStr += s + ",";
+        if (members.length > 0) {
+            for (String s : members) {
+                membersStr += s + ",";
+            }
         }
         Log.e(TAG, "membersStr  " + membersStr.toString());
         return membersStr;
