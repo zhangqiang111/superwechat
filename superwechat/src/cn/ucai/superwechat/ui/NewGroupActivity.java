@@ -21,6 +21,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -48,6 +49,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,6 +78,7 @@ public class NewGroupActivity extends BaseActivity {
     private static final int REQUESTCODE_CUTTING = 2;
     private static final int REQUESTCODE_MEMBER = 3;
     File file;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,7 +142,8 @@ public class NewGroupActivity extends BaseActivity {
 
         }
     }
-    private void createEMGroup(final Intent data){
+
+    private void createEMGroup(final Intent data) {
         String st1 = getResources().getString(R.string.Is_to_create_a_group_chat);
         final String st2 = getResources().getString(R.string.Failed_to_create_groups);
         progressDialog = new ProgressDialog(this);
@@ -153,6 +157,7 @@ public class NewGroupActivity extends BaseActivity {
                 final String groupName = groupNameEditText.getText().toString().trim();
                 String desc = introductionEditText.getText().toString();
                 String[] members = data.getStringArrayExtra("newmembers");
+                Log.e(TAG,"members"+members);
                 try {
                     EMGroupOptions option = new EMGroupOptions();
                     option.maxUsers = 200;
@@ -167,11 +172,6 @@ public class NewGroupActivity extends BaseActivity {
                     }
                     EMGroup group = EMClient.getInstance().groupManager().createGroup(groupName, desc, members, reason, option);
                     createAppGroup(group);
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            createGroupSuccess();
-                        }
-                    });
                 } catch (final HyphenateException e) {
                     runOnUiThread(new Runnable() {
                         public void run() {
@@ -193,7 +193,7 @@ public class NewGroupActivity extends BaseActivity {
         Bundle extras = data.getExtras();
         if (extras != null) {
             Bitmap photo = extras.getParcelable("data");
-            Drawable drawable = new BitmapDrawable(getResources(),photo);
+            Drawable drawable = new BitmapDrawable(getResources(), photo);
             mIvGroupAvatar.setImageDrawable(drawable);
             String imagePath = EaseImageUtils.getImagePath(EMClient.getInstance().getCurrentUser() + I.AVATAR_SUFFIX_JPG);
             File file = new File(imagePath);
@@ -227,12 +227,16 @@ public class NewGroupActivity extends BaseActivity {
     }
 
     private void createGroupSuccess() {
-        progressDialog.dismiss();
-        setResult(RESULT_OK);
-        finish();
+        runOnUiThread(new Runnable() {
+            public void run() {
+                progressDialog.dismiss();
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
     }
 
-    private void createAppGroup(EMGroup group) {
+    private void createAppGroup(final EMGroup group) {
         NetDao.createGroup(this, group, file, new OnCompleteListener<String>() {
             @Override
             public void onSuccess(String s) {
@@ -240,7 +244,13 @@ public class NewGroupActivity extends BaseActivity {
                 if (s != null) {
                     Result result = ResultUtils.getResultFromJson(s, Group.class);
                     if (result.isRetMsg()) {
-                        createGroupSuccess();
+                        Log.e(TAG, "group.getMemberCount" + group.getMemberCount());
+                        Log.e(TAG, "group.getMembers()" + group.getMembers());
+                        if (group.getMemberCount() > 1) {
+                            addGroupMembers(group);
+                        } else {
+                            createGroupSuccess();
+                        }
                     } else {
                         progressDialog.dismiss();
                         if (result.getRetCode() == I.MSG_GROUP_CREATE_FAIL) {
@@ -259,6 +269,45 @@ public class NewGroupActivity extends BaseActivity {
                 CommonUtils.showShortToast(R.string.Failed_to_create_groups);
             }
         });
+    }
+
+    private void addGroupMembers(EMGroup group) {
+        NetDao.addGroupMembers(this, getGropMembers(group.getMembers()), group.getGroupId(), new OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                Log.e(TAG, "s " + s);
+                progressDialog.dismiss();
+                boolean success = false;
+                if (s != null) {
+                    Result result = ResultUtils.getResultFromJson(s, Group.class);
+                    if (result != null && result.isRetMsg()) {
+                        success = true;
+                        createGroupSuccess();
+                    }
+                }
+                if (!success) {
+                    CommonUtils.showShortToast(R.string.Failed_to_create_groups);
+                }
+
+            }
+
+            @Override
+            public void onError(String error) {
+                progressDialog.dismiss();
+                CommonUtils.showShortToast(R.string.Failed_to_create_groups);
+            }
+        });
+
+    }
+
+    private String getGropMembers(List<String> members) {
+        String membersStr = "";
+        members.remove(EMClient.getInstance().getCurrentUser());
+        for (String s : members) {
+            membersStr += s + ",";
+        }
+        Log.e(TAG, "membersStr  " + membersStr.toString());
+        return membersStr;
     }
 
     public void back(View view) {
