@@ -2,6 +2,7 @@ package cn.ucai.superwechat.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -57,6 +58,7 @@ public class ContactInfoActivity extends AppCompatActivity {
 
     private void initData() {
         User user = (User) getIntent().getSerializableExtra(I.User.USER_NAME);
+        addU = user;
         if (user != null) {
             showInfo(user);
         }else {
@@ -76,8 +78,7 @@ public class ContactInfoActivity extends AppCompatActivity {
         if (u != null) {
             EaseUserUtils.setAppUserNick(u.getMUserName(), mTvNick);
         } else {
-            Log.e(TAG, "查找不到");
-            mBtnSendMessage.setVisibility(View.GONE);
+            //在用户联系人列表查找不到
             mBtnSendVideo.setVisibility(View.GONE);
             mBtnAddContact.setVisibility(View.VISIBLE);
             addU = user;
@@ -116,6 +117,10 @@ public class ContactInfoActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ChatActivity.class).putExtra("userId", mTvUsername.getText().toString()));
                 break;
             case R.id.btn_sendVideo:
+                if (addU==null){
+                Log.e(TAG,"addU为空");
+                    return;
+                }
                 startActivity(new Intent(this, VoiceCallActivity.class).putExtra("username", addU.getMUserName())
                         .putExtra("isComingCall", false));
                 break;
