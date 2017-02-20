@@ -65,18 +65,36 @@
       <file leaf-file-name="GroupDetailsActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/cn/ucai/superwechat/ui/GroupDetailsActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
-              <caret line="241" column="103" selection-start-line="241" selection-start-column="103" selection-end-line="241" selection-end-column="103" />
+            <state relative-caret-position="335">
+              <caret line="376" column="5" selection-start-line="376" selection-start-column="5" selection-end-line="376" selection-end-column="5" />
               <folding>
                 <element signature="e#9883#11298#0" expanded="true" />
                 <element signature="e#10148#10687#0" expanded="true" />
                 <element signature="e#10686#10687#0" expanded="true" />
                 <element signature="e#11297#11298#0" expanded="true" />
-                <element signature="e#16358#16415#0" expanded="true" />
-                <element signature="e#16598#16599#0" expanded="true" />
-                <element signature="e#16663#16664#0" expanded="true" />
-                <element signature="e#16734#16735#0" expanded="true" />
-                <element signature="e#16783#16784#0" expanded="true" />
+                <element signature="method#addUserToBlackList#0;class#GroupDetailsActivity#0" expanded="false" />
+                <element signature="method#refreshMembers#0;class#GroupDetailsActivity#0" expanded="false" />
+                <element signature="method#exitDeleteGroup#0;class#GroupDetailsActivity#0" expanded="false" />
+                <element signature="method#clearGroupHistory#0;class#GroupDetailsActivity#0" expanded="false" />
+                <element signature="method#exitGrop#0;class#GroupDetailsActivity#0" expanded="false" />
+                <element signature="docComment;method#deleteGrop#0;class#GroupDetailsActivity#0" expanded="false" />
+                <element signature="e#15338#15339#0" expanded="true" />
+                <element signature="e#15407#15408#0" expanded="true" />
+                <element signature="e#15712#16105#0" expanded="true" />
+                <element signature="e#16104#16105#0" expanded="true" />
+                <element signature="method#addMembersToGroup#0;class#GroupDetailsActivity#0" expanded="false" />
+                <element signature="e#16681#16738#0" expanded="true" />
+                <element signature="e#16921#16922#0" expanded="true" />
+                <element signature="e#16986#16987#0" expanded="true" />
+                <element signature="e#17057#17058#0" expanded="true" />
+                <element signature="e#17106#17107#0" expanded="true" />
+                <element signature="method#onClick#0;class#GroupDetailsActivity#0" expanded="false" />
+                <element signature="method#toggleBlockOfflineMsg#0;class#GroupDetailsActivity#0" expanded="false" />
+                <element signature="method#createProgressDialog#0;class#GroupDetailsActivity#0" expanded="false" />
+                <element signature="method#toggleBlockGroup#0;class#GroupDetailsActivity#0" expanded="false" />
+                <element signature="class#GridAdapter#0;class#GroupDetailsActivity#0" expanded="false" />
+                <element signature="method#updateGroup#0;class#GroupDetailsActivity#0" expanded="false" />
+                <element signature="method#back#0;class#GroupDetailsActivity#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -95,8 +113,8 @@
       <file leaf-file-name="NetDao.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/cn/ucai/superwechat/net/NetDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="568">
-              <caret line="132" column="33" selection-start-line="132" selection-start-column="33" selection-end-line="132" selection-end-column="33" />
+            <state relative-caret-position="538">
+              <caret line="139" column="33" selection-start-line="139" selection-start-column="33" selection-end-line="139" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -106,7 +124,7 @@
         <entry file="file://$PROJECT_DIR$/src/cn/ucai/superwechat/widget/I.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="191">
-              <caret line="118" column="63" selection-start-line="118" selection-start-column="60" selection-end-line="118" selection-end-column="63" />
+              <caret line="23" column="73" selection-start-line="23" selection-start-column="61" selection-end-line="23" selection-end-column="73" />
               <folding />
             </state>
           </provider>
@@ -2701,7 +2719,64 @@
     </navigator>
     <panes>
       <pane id="AndroidView">
-        <subPane />
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="superwechat" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="superwechat" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="superwechat" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="superwechat" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="superwechat" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="superwechat" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="superwechat" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="superwechat" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="superwechat" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="net" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
       </pane>
       <pane id="Scratches" />
       <pane id="Scope" />
@@ -3087,12 +3162,12 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1618" height="870" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5294985" sideWeight="0.5064767" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5265487" sideWeight="0.49352333" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5265487" sideWeight="0.49352333" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -3111,7 +3186,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31268436" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31516936" sideWeight="0.5064767" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32300884" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32966322" sideWeight="0.49484536" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -3611,33 +3686,51 @@
     <entry file="file://$PROJECT_DIR$/src/cn/ucai/superwechat/widget/I.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="191">
-          <caret line="118" column="63" selection-start-line="118" selection-start-column="60" selection-end-line="118" selection-end-column="63" />
+          <caret line="23" column="73" selection-start-line="23" selection-start-column="61" selection-end-line="23" selection-end-column="73" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/cn/ucai/superwechat/net/NetDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="568">
-          <caret line="132" column="33" selection-start-line="132" selection-start-column="33" selection-end-line="132" selection-end-column="33" />
+        <state relative-caret-position="538">
+          <caret line="139" column="33" selection-start-line="139" selection-start-column="33" selection-end-line="139" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/cn/ucai/superwechat/ui/GroupDetailsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="241" column="103" selection-start-line="241" selection-start-column="103" selection-end-line="241" selection-end-column="103" />
+        <state relative-caret-position="335">
+          <caret line="376" column="5" selection-start-line="376" selection-start-column="5" selection-end-line="376" selection-end-column="5" />
           <folding>
             <element signature="e#9883#11298#0" expanded="true" />
             <element signature="e#10148#10687#0" expanded="true" />
             <element signature="e#10686#10687#0" expanded="true" />
             <element signature="e#11297#11298#0" expanded="true" />
-            <element signature="e#16358#16415#0" expanded="true" />
-            <element signature="e#16598#16599#0" expanded="true" />
-            <element signature="e#16663#16664#0" expanded="true" />
-            <element signature="e#16734#16735#0" expanded="true" />
-            <element signature="e#16783#16784#0" expanded="true" />
+            <element signature="method#addUserToBlackList#0;class#GroupDetailsActivity#0" expanded="false" />
+            <element signature="method#refreshMembers#0;class#GroupDetailsActivity#0" expanded="false" />
+            <element signature="method#exitDeleteGroup#0;class#GroupDetailsActivity#0" expanded="false" />
+            <element signature="method#clearGroupHistory#0;class#GroupDetailsActivity#0" expanded="false" />
+            <element signature="method#exitGrop#0;class#GroupDetailsActivity#0" expanded="false" />
+            <element signature="docComment;method#deleteGrop#0;class#GroupDetailsActivity#0" expanded="false" />
+            <element signature="e#15338#15339#0" expanded="true" />
+            <element signature="e#15407#15408#0" expanded="true" />
+            <element signature="e#15712#16105#0" expanded="true" />
+            <element signature="e#16104#16105#0" expanded="true" />
+            <element signature="method#addMembersToGroup#0;class#GroupDetailsActivity#0" expanded="false" />
+            <element signature="e#16681#16738#0" expanded="true" />
+            <element signature="e#16921#16922#0" expanded="true" />
+            <element signature="e#16986#16987#0" expanded="true" />
+            <element signature="e#17057#17058#0" expanded="true" />
+            <element signature="e#17106#17107#0" expanded="true" />
+            <element signature="method#onClick#0;class#GroupDetailsActivity#0" expanded="false" />
+            <element signature="method#toggleBlockOfflineMsg#0;class#GroupDetailsActivity#0" expanded="false" />
+            <element signature="method#createProgressDialog#0;class#GroupDetailsActivity#0" expanded="false" />
+            <element signature="method#toggleBlockGroup#0;class#GroupDetailsActivity#0" expanded="false" />
+            <element signature="class#GridAdapter#0;class#GroupDetailsActivity#0" expanded="false" />
+            <element signature="method#updateGroup#0;class#GroupDetailsActivity#0" expanded="false" />
+            <element signature="method#back#0;class#GroupDetailsActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>

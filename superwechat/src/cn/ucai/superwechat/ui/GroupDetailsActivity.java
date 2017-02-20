@@ -372,6 +372,17 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
      */
     private void deleteGrop() {
         final String st5 = getResources().getString(R.string.Dissolve_group_chat_tofail);
+        NetDao.deleteGroupByHxid(this, groupId, new OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e(TAG,"result"+result.toString());
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
         new Thread(new Runnable() {
             public void run() {
                 try {

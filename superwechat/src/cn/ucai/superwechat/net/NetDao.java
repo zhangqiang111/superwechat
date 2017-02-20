@@ -132,5 +132,12 @@ public class NetDao {
                 .targetClass(String.class)
                 .execute(listener);
     }
+    public static void deleteGroupByHxid(Context context,String groupId,OnCompleteListener<String> listener){
+        OkHttpUtils<String> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_DELETE_GROUP_BY_HXID)
+                .addParam(I.Group.HX_ID,groupId)
+                .targetClass(String.class)
+                .execute(listener);
+    }
 
 }
