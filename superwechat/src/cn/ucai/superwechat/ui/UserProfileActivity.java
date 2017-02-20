@@ -356,4 +356,10 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
         bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
         return baos.toByteArray();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        asyncFetchUserInfo(EMClient.getInstance().getCurrentUser());
+    }
 }

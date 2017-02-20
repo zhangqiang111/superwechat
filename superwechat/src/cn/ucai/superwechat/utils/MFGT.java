@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 
+import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.domain.User;
 
 import cn.ucai.superwechat.R;
@@ -74,23 +75,30 @@ public class MFGT {
 
     public static void gotoContactInfoActivity(Activity activity, User user) {
         Intent intent = new Intent(activity, ContactInfoActivity.class);
-        intent.putExtra(I.User.USER_NAME,user);
-        startActivity(activity,intent);
+        intent.putExtra(I.User.USER_NAME, user);
+        startActivity(activity, intent);
     }
+
     public static void gotoContactInfoActivity(Context context, String username) {
-        Intent intent = new Intent(context, ContactInfoActivity.class);
-        intent.putExtra(I.User.TABLE_NAME,username);
-        startActivity((Activity) context,intent);
+        if (username.equals(EMClient.getInstance().getCurrentUser())) {
+            gotoUserProfile((FragmentActivity) context);
+        } else {
+            Intent intent = new Intent(context, ContactInfoActivity.class);
+            intent.putExtra(I.User.TABLE_NAME, username);
+            startActivity((Activity) context, intent);
+
+        }
     }
 
     public static void gotAddFriendActivity(Activity activity, User addU) {
         Intent intent = new Intent(activity, AddFriendActivity.class);
-        intent.putExtra(I.User.USER_NAME,addU);
-        startActivity(activity,intent);
+        intent.putExtra(I.User.USER_NAME, addU);
+        startActivity(activity, intent);
     }
-    public static void gotoMain(Activity activity){
-        startActivity(activity,new Intent(activity,MainActivity.class)
-                .putExtra(I.BACK_MAIN_FROM_CHAT,1));
+
+    public static void gotoMain(Activity activity) {
+        startActivity(activity, new Intent(activity, MainActivity.class)
+                .putExtra(I.BACK_MAIN_FROM_CHAT, 1));
 
     }
 }
