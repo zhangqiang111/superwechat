@@ -150,8 +150,12 @@ public class InviteMessage {
 		GROUPINVITATION_DECLINED
 	}
 	public String getAvatar() {
-		String path = "http://101.251.196.90:8000/SuperWeChatServerV2.0/downloadAvatar?name_or_hxid="+getFrom()+"&avatarType=user_avatar&m_avatar_suffix="+getMavatarSuffix()+"&updatetime="+getMavatarLastUpdateTime();
-		return path;
+		String path = "http://101.251.196.90:8000/SuperWeChatServerV2.0/downloadAvatar?name_or_hxid="+getFrom()+"&avatarType=user_avatar&m_avatar_suffix="+getMavatarSuffix();
+		if (groupId!=null){
+			return path = "http://101.251.196.90:8000/SuperWeChatServerV2.0/downloadAvatar?name_or_hxid="+getGroupId()+"&avatarType=group_icon&m_avatar_suffix="+getMavatarSuffix();
+		} else {
+			return path;
+		}
 	}
 	
 }
